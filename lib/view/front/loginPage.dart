@@ -12,6 +12,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
@@ -29,7 +30,7 @@ class LoginPage extends StatelessWidget {
                 Text(
                   'DAKUA',
                   style: TextStyle(
-                    fontSize:40,
+                    fontSize: 40,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -48,7 +49,8 @@ class LoginPage extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'ID',
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                  contentPadding:
+                  EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 ),
               ),
             ),
@@ -65,7 +67,8 @@ class LoginPage extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Password',
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                  contentPadding:
+                  EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 ),
               ),
             ),
@@ -90,7 +93,11 @@ class LoginPage extends StatelessWidget {
                   ),
                   child: Text(
                     '로그인하기',
-                    style: TextStyle(fontSize: 18.0, color: Colors.white), // 폰트 크기 변경 및 텍스트 색상을 하얀색으로 설정
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -110,8 +117,9 @@ class LoginPage extends StatelessWidget {
                   child: Text(
                     '회원가입',
                     style: TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.black
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
                   ),
                 ),

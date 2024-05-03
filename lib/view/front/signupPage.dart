@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:mobileplatform_project/viewModel/signupPage_viewModel.dart';
@@ -8,6 +9,7 @@ class SignUpPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => SignUpViewModel(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
@@ -24,81 +26,209 @@ class SignUpPage extends StatelessWidget {
   }
 }
 
-class SignUpForm extends StatelessWidget {
+class SignUpForm extends StatefulWidget {
+  @override
+  _SignUpFormState createState() => _SignUpFormState();
+}
+
+class _SignUpFormState extends State<SignUpForm> {
+  String selectedCountry = '국가';
+
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<SignUpViewModel>(context);
-
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Form(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Text('NAME', textAlign: TextAlign.center),
-            SizedBox(height: 8.0),
-            TextFormField(
-              onChanged: (value) => viewModel.user.name = value,
-              decoration: InputDecoration(
-                labelText: 'ID',
-                filled: true,
-                fillColor: Colors.grey[200],
-                border: InputBorder.none,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Sign Up',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 30.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 50.0),
+        Row(
+          children: [
+            SizedBox(width: 60),
+            Text(
+              'NAME',
+              style: TextStyle(
+                fontSize: 20.0,
               ),
-            ),
-            SizedBox(height: 16.0),
-            TextFormField(
-              onChanged: (value) => viewModel.user.password = value,
-              decoration: InputDecoration(
-                labelText: 'PASSWORD',
-                filled: true,
-                fillColor: Colors.grey[200],
-                border: InputBorder.none,
-              ),
-              obscureText: true,
-            ),
-            SizedBox(height: 16.0),
-            TextFormField(
-              onChanged: (value) => viewModel.user.name = value,
-              decoration: InputDecoration(
-                labelText: 'NAME',
-                filled: true,
-                fillColor: Colors.grey[200],
-                border: InputBorder.none,
-              ),
-            ),
-            SizedBox(height: 16.0),
-            PopupMenuButton<String>(
-              initialValue: viewModel.user.country ?? '한국', // 초기 선택 값
-              itemBuilder: (BuildContext context) {
-                return ['한국', '중국'].map((String country) {
-                  return PopupMenuItem<String>(
-                    value: country,
-                    child: Text(country),
-                  );
-                }).toList();
-              },
-              onSelected: (String value) {
-                viewModel.user.country = value;
-              },
-              child: ListTile(
-                title: Text('Country'),
-                trailing: Icon(Icons.arrow_drop_down),
-              ),
-            ),
-            SizedBox(height: 24.0),
-            ElevatedButton(
-              onPressed: () => viewModel.signUp(context),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.green,
-                minimumSize: Size(double.infinity, 48.0),
-              ),
-              child: Text('회원가입'),
             ),
           ],
         ),
-      ),
+        Container(
+          height: 60,
+          width: 300,
+          decoration: BoxDecoration(
+            color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: TextField(
+            onChanged: (value) => viewModel.user.name = value,
+            decoration: InputDecoration(
+              labelText: '이름',
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            ),
+          ),
+        ),
+        SizedBox(height: 20.0),
+        Row(
+          children: [
+            SizedBox(width: 60),
+            Text(
+              'ID',
+              style: TextStyle(
+                fontSize: 20.0,
+              ),
+            ),
+          ],
+        ),
+        Container(
+          height: 60,
+          width: 300,
+          decoration: BoxDecoration(
+            color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: TextField(
+            onChanged: (value) => viewModel.user.id = value,
+            decoration: InputDecoration(
+              labelText: '아이디',
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            ),
+          ),
+        ),
+        SizedBox(height: 20.0),
+        Row(
+          children: [
+            SizedBox(width: 60),
+            Text(
+              'PASSWORD',
+              style: TextStyle(
+                fontSize: 20.0,
+              ),
+            ),
+          ],
+        ),
+        Container(
+          height: 60,
+          width: 300,
+          decoration: BoxDecoration(
+            color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: TextField(
+            onChanged: (value) => viewModel.user.password = value,
+            decoration: InputDecoration(
+              labelText: '비밀번호',
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            ),
+          ),
+        ),
+        SizedBox(height: 20.0),
+        Row(
+          children: [
+            SizedBox(width: 60),
+            Text(
+              'COUNTRY',
+              style: TextStyle(
+                fontSize: 20.0,
+              ),
+            ),
+          ],
+        ),
+        GestureDetector(
+          onTap: () {
+            showCupertinoModalPopup(
+              context: context,
+              builder: (BuildContext context) {
+                return CupertinoActionSheet(
+                  actions: [
+                    CupertinoActionSheetAction(
+                      onPressed: () {
+                        setState(() {
+                          selectedCountry = '한국';
+                          viewModel.user.country = selectedCountry;
+                        });
+                        Navigator.pop(context);
+                      },
+                      child: Text('한국'),
+                    ),
+                    CupertinoActionSheetAction(
+                      onPressed: () {
+                        setState(() {
+                          selectedCountry = '중국';
+                          viewModel.user.country = selectedCountry;
+                        });
+                        Navigator.pop(context);
+                      },
+                      child: Text('중국'),
+                    ),
+                  ],
+                  cancelButton: CupertinoActionSheetAction(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('취소'),
+                  ),
+                );
+              },
+            );
+          },
+          child: Container(
+            width: 300,
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  selectedCountry,
+                  style: TextStyle(color: Colors.black),
+                ),
+                Icon(Icons.arrow_drop_down),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: 50.0),
+        SizedBox(
+          height: 60,
+          width: 300,
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.greenAccent, Colors.blueGrey],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(40.0),
+            ),
+            child: ElevatedButton(
+              onPressed: () => viewModel.signUp(context),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.transparent, // 버튼 배경 투명으로 설정
+                elevation: 0, // 그라디언트를 위한 elevation 설정
+              ),
+              child: Text(
+                '회원가입하기',
+                style: TextStyle(fontSize: 18.0, color: Colors.white, fontWeight: FontWeight.bold,),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
+
