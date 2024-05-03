@@ -61,12 +61,7 @@ flutter:
 
   assets:
     - assets/images/launch_image.png
-    - assets/icons/1.png
-    - assets/icons/2.png
-    - assets/icons/3.png
-    - assets/icons/4.png
     - assets/icons/top_logo.png
-    - assets/icons/buttom.png
     - assets/icons/logo.jpeg
   # To add assets to your application, add an assets section, like this:
   # assets:

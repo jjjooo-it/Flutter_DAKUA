@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobileplatform_project/view/front/signupPage.dart';
 import 'package:mobileplatform_project/view/home/homePage.dart';
+import 'package:mobileplatform_project/view/widget/bottomNavBar.dart';
 
 void main() {
   runApp(const LoginPage());
@@ -135,7 +136,7 @@ class LoginPage extends StatelessWidget {
 void _navigateToMainPage(BuildContext context) {
   Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => HomePage()),
+    MaterialPageRoute(builder: (context) => BottomNavBar()),
   );
 }
 

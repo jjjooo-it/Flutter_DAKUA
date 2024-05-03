@@ -17,7 +17,7 @@ class SignUpViewModel with ChangeNotifier {
       context: context,
       builder: (_) => AlertDialog(
         title: Text('축하합니다!'),
-        content: Text('이제 DAKUA 회원이세요'),
+        content: Text('DAKUA 회원이 되셨습니다.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
