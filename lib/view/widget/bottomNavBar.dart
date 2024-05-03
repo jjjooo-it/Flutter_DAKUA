@@ -11,7 +11,7 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  var _index = 1; // 홈으로 시작하도록 수정
+  var _index = 1;
   final _pages = [
     HistoryPage(),
     HomePage(),
@@ -24,7 +24,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       body: _pages[_index],
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: Color.fromRGBO(37, 61, 70, 1), // 선택된 아이템의 색상
+          selectedItemColor: Color.fromRGBO(37, 61, 70, 1),
           onTap: (index) {
             setState(() {
               _index = index;

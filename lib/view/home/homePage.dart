@@ -26,16 +26,14 @@ class HomePage extends StatelessWidget {
                   Center(child: Text('광고문의 dakua@dankook.ac.kr',  style: TextStyle(fontSize: 18.0),)),
                 ],
                 options: CarouselOptions(
-                  height: 50, // 배너 높이 설정
-                  aspectRatio: 16 / 9, // 배너 비율 설정
+                  height: 50,
                   viewportFraction: 1, // 보여지는 배너의 너비 비율 설정
-                  initialPage: 0, // 초기 페이지 설정
+                  initialPage: 0,
                   enableInfiniteScroll: true, // 무한 스크롤 활성화
                   autoPlay: true, // 자동 재생 활성화
                   autoPlayInterval: Duration(seconds: 20), // 자동 재생 간격 설정
                   autoPlayAnimationDuration: Duration(milliseconds: 8000), // 자동 재생 애니메이션 지속 시간 설정
                   autoPlayCurve: Curves.fastOutSlowIn, // 자동 재생 애니메이션 커브 설정
-                  enlargeCenterPage: true, // 현재 선택된 페이지 확대 설정
                   scrollDirection: Axis.horizontal, // 스크롤 방향 설정
                 ),
               ),
@@ -50,10 +48,10 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
               onPressed: () => _attachFile(context),
               style: ElevatedButton.styleFrom(
-                primary: Colors.white, // 버튼 배경색
+                primary: Colors.white,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5), // 둥근 모서리 설정
-                  side: BorderSide(color: Colors.grey), // 테두리 설정
+                  borderRadius: BorderRadius.circular(5),
+                  side: BorderSide(color: Colors.grey),
                 ),
               ),
               child: SizedBox(

@@ -217,8 +217,8 @@ class _SignUpFormState extends State<SignUpForm> {
             child: ElevatedButton(
               onPressed: () => viewModel.signUp(context),
               style: ElevatedButton.styleFrom(
-                primary: Colors.transparent, // 버튼 배경 투명으로 설정
-                elevation: 0, // 그라디언트를 위한 elevation 설정
+                primary: Colors.transparent,
+                elevation: 0,
               ),
               child: Text(
                 '회원가입하기',

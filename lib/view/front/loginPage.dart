@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobileplatform_project/view/front/signupPage.dart';
-import 'package:mobileplatform_project/view/home/homePage.dart';
 import 'package:mobileplatform_project/view/widget/bottomNavBar.dart';
 
 void main() {
@@ -89,8 +88,8 @@ class LoginPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () => _navigateToMainPage(context),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.transparent, // 버튼 배경 투명으로 설정
-                    elevation: 0, // 그라디언트를 위한 elevation 설정
+                    primary: Colors.transparent,
+                    elevation: 0,
                   ),
                   child: Text(
                     '로그인하기',
