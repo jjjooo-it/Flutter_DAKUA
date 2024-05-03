@@ -21,74 +21,98 @@ class LoginPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/icons/logo.jpeg', // 이미지 파일 경로 설정
-                  width: 50, // 이미지 너비 설정
-                  height: 50, // 이미지 높이 설정
+                  'assets/icons/logo.jpeg',
+                  width: 50,
+                  height: 50,
                 ),
                 SizedBox(width: 10),
                 Text(
                   'DAKUA',
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize:40,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 20),
-            TextField(
-              // controller: _emailController,
-              decoration: InputDecoration(
-                labelText: 'ID',
-                filled: true, // 배경색 채우기
-                fillColor: Colors.grey[200], // 배경색 변경
-                border: OutlineInputBorder( // 둥근 테두리
-                  borderRadius: BorderRadius.circular(10.0),
+            SizedBox(height: 50),
+            Container(
+              height: 60,
+              width: 300,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: TextField(
+                // controller: _emailController,
+                decoration: InputDecoration(
+                  labelText: 'ID',
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            TextField(
-              // controller: _passwordController,
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                filled: true, // 배경색 채우기
-                fillColor: Colors.grey[200], // 배경색 변경
-                border: OutlineInputBorder( // 둥근 테두리
-                  borderRadius: BorderRadius.circular(10.0),
+            SizedBox(height: 10),
+            Container(
+              height: 60,
+              width: 300,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: TextField(
+                // controller: _emailController,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
                 ),
               ),
             ),
             SizedBox(height: 20),
             SizedBox(
-              width: double.infinity, // 버튼 너비를 화면 가로 전체로 확장
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.green, // 버튼 색상 변경
-                  padding: EdgeInsets.symmetric(vertical: 15.0), // 버튼 내부 패딩
+              height: 60,
+              width: 300,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.greenAccent, Colors.blueGrey],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(40.0),
                 ),
-                onPressed: () => _navigateToMainPage(context),
-                child: Text(
-                  '로그인하기',
-                  style: TextStyle(fontSize: 18.0), // 폰트 크기 변경
+                child: ElevatedButton(
+                  onPressed: () => _navigateToMainPage(context),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.transparent, // 버튼 배경 투명으로 설정
+                    elevation: 0, // 그라디언트를 위한 elevation 설정
+                  ),
+                  child: Text(
+                    '로그인하기',
+                    style: TextStyle(fontSize: 18.0, color: Colors.white), // 폰트 크기 변경 및 텍스트 색상을 하얀색으로 설정
+                  ),
                 ),
               ),
             ),
+
             SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   '아직 회원이 아니라면?',
-                  style: TextStyle(fontSize: 14.0), // 폰트 크기 변경
+                  style: TextStyle(fontSize: 14.0),
                 ),
                 SizedBox(width: 5),
                 TextButton(
                   onPressed: () => _navigateToSignUpPage(context),
                   child: Text(
                     '회원가입',
-                    style: TextStyle(fontSize: 14.0), // 폰트 크기 변경
+                    style: TextStyle(
+                        fontSize: 14.0,
+                        color: Colors.black
+                    ),
                   ),
                 ),
               ],

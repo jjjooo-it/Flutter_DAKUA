@@ -1,46 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-// SignUpViewModel 클래스는 ChangeNotifier를 상속하고 필요한 속성과 메서드를 갖춰야 합니다.
-class SignUpViewModel with ChangeNotifier {
-  String _email = '';
-  String _password = '';
-  String _nickname = '';
-  String _country = '';
-
-  // Getters
-  String get email => _email;
-  String get password => _password;
-  String get nickname => _nickname;
-  String get country => _country;
-
-  // Setters
-  set email(String value) {
-    _email = value;
-    notifyListeners();
-  }
-
-  set password(String value) {
-    _password = value;
-    notifyListeners();
-  }
-
-  set nickname(String value) {
-    _nickname = value;
-    notifyListeners();
-  }
-
-  set country(String value) {
-    _country = value;
-    notifyListeners();
-  }
-
-  // 가입 메서드
-  void signUp() {
-    // 여기에 가입 로직을 구현합니다.
-    // 예를 들어, 이메일과 비밀번호로 실제로 서버에 가입 요청을 보낼 수 있습니다.
-  }
-}
+import 'package:mobileplatform_project/viewModel/signupPage_viewModel.dart';
 
 class SignUpPage extends StatelessWidget {
   @override
@@ -48,8 +8,17 @@ class SignUpPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => SignUpViewModel(),
       child: Scaffold(
-        appBar: AppBar(title: Text('회원가입')),
-        body: SignUpForm(),
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
+        body: Center(
+          child: SignUpForm(),
+        ),
       ),
     );
   }
@@ -64,40 +33,68 @@ class SignUpForm extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Form(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            Text('NAME', textAlign: TextAlign.center),
+            SizedBox(height: 8.0),
             TextFormField(
-              onChanged: (value) => viewModel.email = value,
+              onChanged: (value) => viewModel.user.name = value,
               decoration: InputDecoration(
-                labelText: '이메일',
+                labelText: 'ID',
+                filled: true,
+                fillColor: Colors.grey[200],
+                border: InputBorder.none,
               ),
             ),
             SizedBox(height: 16.0),
             TextFormField(
-              onChanged: (value) => viewModel.password = value,
+              onChanged: (value) => viewModel.user.password = value,
               decoration: InputDecoration(
-                labelText: '비밀번호',
+                labelText: 'PASSWORD',
+                filled: true,
+                fillColor: Colors.grey[200],
+                border: InputBorder.none,
               ),
               obscureText: true,
             ),
             SizedBox(height: 16.0),
             TextFormField(
-              onChanged: (value) => viewModel.nickname = value,
+              onChanged: (value) => viewModel.user.name = value,
               decoration: InputDecoration(
-                labelText: '닉네임',
+                labelText: 'NAME',
+                filled: true,
+                fillColor: Colors.grey[200],
+                border: InputBorder.none,
               ),
             ),
             SizedBox(height: 16.0),
-            TextFormField(
-              onChanged: (value) => viewModel.country = value,
-              decoration: InputDecoration(
-                labelText: '국가',
+            PopupMenuButton<String>(
+              initialValue: viewModel.user.country ?? '한국', // 초기 선택 값
+              itemBuilder: (BuildContext context) {
+                return ['한국', '중국'].map((String country) {
+                  return PopupMenuItem<String>(
+                    value: country,
+                    child: Text(country),
+                  );
+                }).toList();
+              },
+              onSelected: (String value) {
+                viewModel.user.country = value;
+              },
+              child: ListTile(
+                title: Text('Country'),
+                trailing: Icon(Icons.arrow_drop_down),
               ),
             ),
             SizedBox(height: 24.0),
             ElevatedButton(
-              onPressed: () => viewModel.signUp(),
-              child: Text('가입하기'),
+              onPressed: () => viewModel.signUp(context),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.green,
+                minimumSize: Size(double.infinity, 48.0),
+              ),
+              child: Text('회원가입'),
             ),
           ],
         ),
