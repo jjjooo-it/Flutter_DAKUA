@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobileplatform_project/view/home/loadingScreen.dart';
 import 'package:mobileplatform_project/view/widget/appBar.dart';
-
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:file_picker/file_picker.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key});
@@ -11,66 +12,113 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBarWidget(),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '요약하는데는 약 2분 정도 시간이 걸릴 수 있어요!',
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
+        child: Column(
+          children: [
+            Container(
+              height: 100,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
               ),
-              SizedBox(height: 20.0),
-              Text(
-                '녹음 파일을 첨부해 주세요.',
-                style: TextStyle(fontSize: 18.0),
-                textAlign: TextAlign.center,
+              child: CarouselSlider(
+                items: [
+                  Center(child: Text('요약하는데 약 2분 정도 시간이 걸릴 수 있어요!', style: TextStyle(fontSize: 16.0),)),
+                  Center(child: Text('DAKUA는 수업 요약에 탁월해요',  style: TextStyle(fontSize: 18.0),)),
+                  Center(child: Text('광고문의 dakua@dankook.ac.kr',  style: TextStyle(fontSize: 18.0),)),
+                ],
+                options: CarouselOptions(
+                  height: 50, // 배너 높이 설정
+                  aspectRatio: 16 / 9, // 배너 비율 설정
+                  viewportFraction: 1, // 보여지는 배너의 너비 비율 설정
+                  initialPage: 0, // 초기 페이지 설정
+                  enableInfiniteScroll: true, // 무한 스크롤 활성화
+                  autoPlay: true, // 자동 재생 활성화
+                  autoPlayInterval: Duration(seconds: 20), // 자동 재생 간격 설정
+                  autoPlayAnimationDuration: Duration(milliseconds: 8000), // 자동 재생 애니메이션 지속 시간 설정
+                  autoPlayCurve: Curves.fastOutSlowIn, // 자동 재생 애니메이션 커브 설정
+                  enlargeCenterPage: true, // 현재 선택된 페이지 확대 설정
+                  scrollDirection: Axis.horizontal, // 스크롤 방향 설정
+                ),
               ),
-              SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: () {
-                  // 녹음 파일 첨부 기능 추가
-                },
-                child: Text('첨부하기'),
+            ),
+            SizedBox(height: 100.0),
+            Text(
+              '녹음 파일 첨부',
+              style: TextStyle(fontSize: 18.0),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () => _attachFile(context),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.white, // 버튼 배경색
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5), // 둥근 모서리 설정
+                  side: BorderSide(color: Colors.grey), // 테두리 설정
+                ),
               ),
-              SizedBox(height: 30.0),
-              SizedBox(
-                height: 60,
-                width: 300,
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.greenAccent, Colors.blueGrey],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(40.0),
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () => _navigateToLoadingPage(context),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.transparent, // 버튼 배경 투명으로 설정
-                      elevation: 0, // 그라디언트를 위한 elevation 설정
-                    ),
-                    child: Text(
-                      '요약 생성하기',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+              child: SizedBox(
+                width: 230,
+                height: 50,
+                child: Center(
+                  child: Text(
+                    '첨부하기',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.black,
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+            SizedBox(height: 150.0),
+            SizedBox(
+              height: 60,
+              width: 300,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.greenAccent, Colors.blueGrey],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(40.0),
+                ),
+                child: ElevatedButton(
+                  onPressed: () => _navigateToLoadingPage(context),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.transparent,
+                    elevation: 0,
+                  ),
+                  child: Text(
+                    '요약 생성하기',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
+//파일 첨부 코드
+void _attachFile(BuildContext context) async {
+  FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+  if (result != null) {
+    PlatformFile file = result.files.first;
+    print('Selected file: ${file.name}');
+  } else {
+    print('File picking canceled.');
+  }
+}
+
 void _navigateToLoadingPage(BuildContext context) {
   Navigator.push(
     context,

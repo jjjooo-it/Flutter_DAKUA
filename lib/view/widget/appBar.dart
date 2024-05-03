@@ -27,6 +27,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
+      leading: Container(), // 뒤로 가기 아이콘 없애기
     );
   }
 }
