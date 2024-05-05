@@ -1,18 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:mobileplatform_project/view/home/loadingScreen.dart';
-import 'package:mobileplatform_project/view/widget/appBar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:mobileplatform_project/view/widget/appBar.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key});
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool _loading = false;
+  bool _dataReceived = false; // 백엔드에서 데이터를 받았는지 여부를 나타내는 변수
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(),
       body: Center(
-        child: Column(
+        child: _loading
+            ? Column(                   /////////////////////////////로딩 화면 시작
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '요약 생성 중입니다. \n 잠시만 기다려 주세요.',
+              style: TextStyle(fontSize: 20.0),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 50),
+            CircularProgressIndicator(),  /////////////////////////////로딩 화면 끝
+          ],
+        )
+            : _dataReceived   /////////////////////////////요약 결과가 나올 화면 시작
+            ? Text(
+          '끝~',
+          style: TextStyle(fontSize: 20.0),
+        )                     /////////////////////////////요약 결과가 나올 화면 끝
+
+            : Column(
           children: [
             Container(
               height: 100,
@@ -21,20 +47,33 @@ class HomePage extends StatelessWidget {
               ),
               child: CarouselSlider(
                 items: [
-                  Center(child: Text('요약하는데 약 2분 정도 시간이 걸릴 수 있어요!', style: TextStyle(fontSize: 16.0),)),
-                  Center(child: Text('DAKUA는 수업 요약에 탁월해요',  style: TextStyle(fontSize: 18.0),)),
-                  Center(child: Text('광고문의 dakua@dankook.ac.kr',  style: TextStyle(fontSize: 18.0),)),
+                  Center(
+                      child: Text(
+                        '요약하는데 약 2분 정도 시간이 걸릴 수 있어요!',
+                        style: TextStyle(fontSize: 16.0),
+                      )),
+                  Center(
+                      child: Text(
+                        'DAKUA는 수업 요약에 탁월해요',
+                        style: TextStyle(fontSize: 18.0),
+                      )),
+                  Center(
+                      child: Text(
+                        '광고문의 dakua@dankook.ac.kr',
+                        style: TextStyle(fontSize: 18.0),
+                      )),
                 ],
                 options: CarouselOptions(
                   height: 50,
-                  viewportFraction: 1, // 보여지는 배너의 너비 비율 설정
+                  viewportFraction: 1,
                   initialPage: 0,
-                  enableInfiniteScroll: true, // 무한 스크롤 활성화
-                  autoPlay: true, // 자동 재생 활성화
-                  autoPlayInterval: Duration(seconds: 20), // 자동 재생 간격 설정
-                  autoPlayAnimationDuration: Duration(milliseconds: 8000), // 자동 재생 애니메이션 지속 시간 설정
-                  autoPlayCurve: Curves.fastOutSlowIn, // 자동 재생 애니메이션 커브 설정
-                  scrollDirection: Axis.horizontal, // 스크롤 방향 설정
+                  enableInfiniteScroll: true,
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 20),
+                  autoPlayAnimationDuration:
+                  Duration(milliseconds: 8000),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  scrollDirection: Axis.horizontal,
                 ),
               ),
             ),
@@ -82,7 +121,18 @@ class HomePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(40.0),
                 ),
                 child: ElevatedButton(
-                  onPressed: () => _navigateToLoadingPage(context),
+                  onPressed: () {
+                    setState(() {
+                      _loading = true;
+                      // 여기서 백엔드로부터 데이터를 받았다고 가정
+                      Future.delayed(Duration(seconds: 2), () {
+                        setState(() {
+                          _dataReceived = true;
+                          _loading = false;
+                        });
+                      });
+                    });
+                  },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.transparent,
                     elevation: 0,
@@ -103,23 +153,16 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-}
 
-//파일 첨부 코드
-void _attachFile(BuildContext context) async {
-  FilePickerResult? result = await FilePicker.platform.pickFiles();
+  // 파일 첨부 코드
+  void _attachFile(BuildContext context) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
 
-  if (result != null) {
-    PlatformFile file = result.files.first;
-    print('Selected file: ${file.name}');
-  } else {
-    print('File picking canceled.');
+    if (result != null) {
+      PlatformFile file = result.files.first;
+      print('Selected file: ${file.name}');
+    } else {
+      print('File picking canceled.');
+    }
   }
-}
-
-void _navigateToLoadingPage(BuildContext context) {
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => LoadingPage()),
-  );
 }
