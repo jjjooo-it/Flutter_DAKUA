@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:mobileplatform_project/view/widget/appBar.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _loading = false;
-  bool _dataReceived = false; // 백엔드에서 데이터를 받았는지 여부를 나타내는 변수
+  bool _dataReceived = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +30,20 @@ class _HomePageState extends State<HomePage> {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 50),
-            CircularProgressIndicator(),  /////////////////////////////로딩 화면 끝
-          ],
-        )
-            : _dataReceived   /////////////////////////////요약 결과가 나올 화면 시작
+            SpinKitWave(
+               itemBuilder: (context, index) {
+                return const DecoratedBox(
+                 decoration: BoxDecoration(color: Colors.green),
+                );
+              },
+            ),      /////////////////////////////로딩 화면 끝
+           ]
+          )
+            : _dataReceived   /////////////////////////////요약 결과 화면 시작
             ? Text(
           '끝~',
           style: TextStyle(fontSize: 20.0),
-        )                     /////////////////////////////요약 결과가 나올 화면 끝
+        )                     /////////////////////////////요약 결과 화면 끝
 
             : Column(
           children: [
@@ -124,8 +131,8 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     setState(() {
                       _loading = true;
-                      // 여기서 백엔드로부터 데이터를 받았다고 가정
-                      Future.delayed(Duration(seconds: 2), () {
+                      //백엔드로 부터 데이터를 가져왔는지 확인 하는 코드로 변경해야 함
+                      Future.delayed(Duration(seconds: 5), () {
                         setState(() {
                           _dataReceived = true;
                           _loading = false;
