@@ -36,16 +36,16 @@ class _HomePageState extends State<HomePage> {
                  decoration: BoxDecoration(color: Colors.green),
                 );
               },
-            ),      /////////////////////////////로딩 화면 끝
+            ),
            ]
           )
-            : _dataReceived   /////////////////////////////요약 결과 화면 시작
+            : _dataReceived          /////////////////////////////요약 결과 화면 시작
             ? Text(
           '끝~',
           style: TextStyle(fontSize: 20.0),
-        )                     /////////////////////////////요약 결과 화면 끝
+        )
 
-            : Column(
+            : Column(              /////////////////////////////기본 홈 화면 시작
           children: [
             Container(
               height: 100,
