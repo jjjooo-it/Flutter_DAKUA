@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:mobileplatform_project/view/widget/appBar.dart';
+import 'package:mobileplatform_project/view/home/resultPage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,6 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool _loading = false;
   bool _dataReceived = false;
+  String? _attachedFileName;
 
   @override
   Widget build(BuildContext context) {
@@ -21,31 +23,137 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBarWidget(),
       body: Center(
         child: _loading
-            ? Column(                   /////////////////////////////로딩 화면 시작
-          mainAxisAlignment: MainAxisAlignment.center,
+            ? Column( /////////////////////////////로딩 화면 시작
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '요약 생성 중입니다. \n 잠시만 기다려 주세요.',
+                style: TextStyle(fontSize: 20.0),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 50),
+              SpinKitWave(
+                itemBuilder: (context, index) {
+                  return const DecoratedBox(
+                    decoration: BoxDecoration(color: Colors.green),
+                  );
+                },
+              ),
+            ]
+        )
+            : _dataReceived /////////////////////////////요약 결과 화면 시작
+            ? Column(
           children: [
-            Text(
-              '요약 생성 중입니다. \n 잠시만 기다려 주세요.',
-              style: TextStyle(fontSize: 20.0),
-              textAlign: TextAlign.center,
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _dataReceived = false;
+                      _loading = false;
+                    });
+                  },
+                  child: Text(
+                    '다른 파일 올리기',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            SizedBox(height: 50),
-            SpinKitWave(
-               itemBuilder: (context, index) {
-                return const DecoratedBox(
-                 decoration: BoxDecoration(color: Colors.green),
-                );
-              },
+            SizedBox(height: 30),
+            Container(
+              width: 230,
+              height: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: Colors.grey,
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  _attachedFileName != null
+                      ? '첨부한 파일: $_attachedFileName'
+                      : '첨부한 파일이 없습니다.',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+              ),
             ),
-           ]
-          )
-            : _dataReceived          /////////////////////////////요약 결과 화면 시작
-            ? Text(
-          '끝~',
-          style: TextStyle(fontSize: 20.0),
+            SizedBox(height: 20),
+            Container(
+              width: double.infinity,
+              height: 300,
+              color: Colors.grey[300],
+            ),
+            SizedBox(height: 30),
+            SizedBox(
+              height: 60,
+              width: 300,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.greenAccent, Colors.blueGrey],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(40.0),
+                ),
+                child: ElevatedButton(
+                  onPressed: () => _navigateToResultPage(context),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.transparent,
+                    elevation: 0,
+                  ),
+                  child: Text(
+                    '기록 저장하기',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                  onPressed: ()=> _navigateToResultPage(context),
+                  child:
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        '줄글로 보기',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Icon(
+                        Icons.arrow_forward,
+                        color: Colors.black,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 20),
+              ],
+            ),
+          ],
         )
 
-            : Column(              /////////////////////////////기본 홈 화면 시작
+
+        : Column( ///////////////////////////////// 기본 홈 화면 시작
           children: [
             Container(
               height: 100,
@@ -105,12 +213,15 @@ class _HomePageState extends State<HomePage> {
                 height: 50,
                 child: Center(
                   child: Text(
-                    '첨부하기',
+                    _attachedFileName != null
+                        ? '$_attachedFileName'
+                        : '첨부하기',
                     style: TextStyle(
                       fontSize: 18.0,
                       color: Colors.black,
                     ),
                   ),
+
                 ),
               ),
             ),
@@ -167,9 +278,54 @@ class _HomePageState extends State<HomePage> {
 
     if (result != null) {
       PlatformFile file = result.files.first;
+      setState(() {
+        _attachedFileName = file.name;
+      });
       print('Selected file: ${file.name}');
     } else {
       print('File picking canceled.');
     }
   }
+
+  void _saveRecord(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("요약 기록을 저장하시겠습니까?"),
+          content: Text("저장 폴더"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _saveToFile();
+              },
+              child: Text("예"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("아니요"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
+// 파일 저장 메서드
+  void _saveToFile() {
+    // 파일 저장 코드 구현 해야 됨
+    print("파일을 저장합니다.");
+  }
+
+  void _navigateToResultPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ResultPage()),
+    );
+  }
+
 }
