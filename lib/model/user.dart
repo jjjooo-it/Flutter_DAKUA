@@ -2,14 +2,12 @@ class User {
   String id;
   String username;
   String password;
-  String name;
   String country;
 
   User({
     required this.id,
     required this.username,
     required this.password,
-    required this.name,
     required this.country,
   });
 
@@ -18,7 +16,6 @@ class User {
       'id': id,
       'username': username,
       'password': password,
-      'name': name,
       'country': country,
     };
   }
@@ -28,7 +25,6 @@ class User {
       id: map['id'],
       username: map['username'],
       password: map['password'],
-      name: map['name'],
       country: map['country'],
     );
   }

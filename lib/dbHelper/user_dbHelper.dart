@@ -35,32 +35,21 @@ class DBHelper {
     );
   }
 
-  static Future<List<User>> getUsers() async {
+  static Future<User?> getUser(String id, String password) async {
     final db = await getDB();
-    final List<Map<String, dynamic>> maps = await db.query('users');
-    return List.generate(maps.length, (i) {
-      return User(
-        id: maps[i]['id'],
-        username: maps[i]['username'],
-        password: maps[i]['password'],
-        name: maps[i]['name'],
-        country: maps[i]['country'],
-      );
-    });
-  }
-
-  static Future<User?> getUserByUsernameAndPassword(
-      String username, String password) async {
-    final db = await getDB();
-    List<Map<String, dynamic>> results = await db.query(
+    final List<Map<String, dynamic>> maps = await db.query(
       'users',
-      where: 'username = ? AND password = ?',
-      whereArgs: [username, password],
+      where: 'id = ? AND password = ?',
+      whereArgs: [id, password],
     );
-    if (results.isNotEmpty) {
-      return User.fromMap(results.first);
-    } else {
-      return null;
+    if (maps.isNotEmpty) {
+      return User(
+        id: maps[0]['id'],
+        username: maps[0]['username'],
+        password: maps[0]['password'],
+        country: maps[0]['country'],
+      );
     }
+    return null;
   }
 }
