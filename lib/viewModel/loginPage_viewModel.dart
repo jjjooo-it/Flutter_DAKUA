@@ -15,10 +15,8 @@ class LoginViewModel extends ChangeNotifier {
     User? loggedInUser =
     await DBHelper.getUser(user.username, user.password);
     if (loggedInUser != null) {
-      // 로그인 성공
       _navigateToMainPage(context);
     } else {
-      // 로그인 실패
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -28,7 +26,7 @@ class LoginViewModel extends ChangeNotifier {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop(); // 다이얼로그 닫기
+                  Navigator.of(context).pop();
                 },
                 child: const Text('확인'),
               ),
