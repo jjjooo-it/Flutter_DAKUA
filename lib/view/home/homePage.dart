@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
               child: Center(
                 child: Text(
                   _attachedFileName != null
-                      ? '첨부한 파일: $_attachedFileName'
+                      ? '$_attachedFileName'
                       : '첨부한 파일이 없습니다.',
                   style: TextStyle(fontSize: 16.0),
                 ),

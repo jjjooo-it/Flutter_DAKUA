@@ -7,7 +7,7 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => SignUpViewModel(),
+      create: (context) => SignUpViewModel(context),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -68,7 +68,7 @@ class _SignUpFormState extends State<SignUpForm> {
             borderRadius: BorderRadius.circular(20.0),
           ),
           child: TextField(
-            onChanged: (value) => viewModel.user.name = value,
+            onChanged: (value) => viewModel.user.username = value.toString(),
             decoration: InputDecoration(
               labelText: '이름',
               border: InputBorder.none,
@@ -96,7 +96,7 @@ class _SignUpFormState extends State<SignUpForm> {
             borderRadius: BorderRadius.circular(20.0),
           ),
           child: TextField(
-            onChanged: (value) => viewModel.user.id = value,
+            onChanged: (value) => viewModel.user.id = value.toString(),
             decoration: InputDecoration(
               labelText: '아이디',
               border: InputBorder.none,
@@ -124,7 +124,7 @@ class _SignUpFormState extends State<SignUpForm> {
             borderRadius: BorderRadius.circular(20.0),
           ),
           child: TextField(
-            onChanged: (value) => viewModel.user.password = value,
+            onChanged: (value) => viewModel.user.password = value.toString(),
             decoration: InputDecoration(
               labelText: '비밀번호',
               border: InputBorder.none,
@@ -215,7 +215,7 @@ class _SignUpFormState extends State<SignUpForm> {
               borderRadius: BorderRadius.circular(40.0),
             ),
             child: ElevatedButton(
-              onPressed: () => viewModel.signUp(context),
+              onPressed: () => viewModel.signUp(),
               style: ElevatedButton.styleFrom(
                 primary: Colors.transparent,
                 elevation: 0,
