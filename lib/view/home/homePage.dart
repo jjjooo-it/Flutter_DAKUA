@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(40.0),
                     ),
                     child: ElevatedButton(
-                      onPressed: () => _navigateToResultPage(context),
+                      onPressed: () => _saveRecord(context),
                       style: ElevatedButton.styleFrom(
                         primary: Colors.transparent,
                         elevation: 0,
@@ -293,18 +293,40 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  //파일 저장 코드
   void _saveRecord(BuildContext context) async {
+    String folderName = ''; // 선택된 폴더 이름
+    String fileName = ''; // 저장할 파일 이름
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text("요약 기록을 저장하시겠습니까?"),
-          content: Text("저장 폴더"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("저장 폴더 선택"),
+              TextFormField(
+                onChanged: (value) {
+                  folderName = value;
+                },
+              ),
+              SizedBox(height: 10),
+              Text("저장 이름"),
+              TextFormField(
+                onChanged: (value) {
+                  fileName = value;
+                },
+              ),
+            ],
+          ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                _saveToFile();
+                _saveToFile(folderName, fileName);
               },
               child: Text("예"),
             ),
@@ -320,12 +342,28 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-
-// 파일 저장 메서드
-  void _saveToFile() {
-    // 파일 저장 코드 구현 해야 됨
-    print("파일을 저장합니다.");
+  void _saveToFile(String folderName, String fileName) {
+    // 추후 파일 저장 코드 작성해야 됨
+    print('Folder Name: $folderName');
+    print('File Name: $fileName');
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("저장되었습니다"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("확인"),
+            ),
+          ],
+        );
+      },
+    );
   }
+
 
   void _navigateToResultPage(BuildContext context) {
     Navigator.push(
