@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mobileplatform_project/view/widget/appBar.dart';
 
-class ResultPage extends StatefulWidget {
-  const ResultPage({Key? key}) : super(key: key);
+class ResultDetailPage extends StatefulWidget {
+  const ResultDetailPage({Key? key}) : super(key: key);
 
   @override
   _ResultPageState createState() => _ResultPageState();
 }
 
-class _ResultPageState extends State<ResultPage> {
+class _ResultPageState extends State<ResultDetailPage> {
   bool isExpanded = true;
 
   @override
@@ -79,7 +79,9 @@ class _ResultPageState extends State<ResultPage> {
                                   isExpanded = !isExpanded;
                                 });
                               },
-                              icon: isExpanded ? Icon(Icons.expand_less) : Icon(Icons.expand_more), // 상태에 따라 다른 아이콘 표시
+                              icon: Icon(
+                                isExpanded ? Icons.expand_more : Icons.expand_less, // 아이콘 변경
+                              ),
                             ),
                           ),
                         ],
