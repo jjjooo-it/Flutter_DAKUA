@@ -20,7 +20,6 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-
 class Login extends StatelessWidget {
   const Login({Key? key});
 

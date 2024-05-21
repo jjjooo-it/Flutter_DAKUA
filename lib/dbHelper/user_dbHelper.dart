@@ -1,8 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:mobileplatform_project/model/user.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 class DBHelper {
   static Database? _db;
@@ -11,17 +9,8 @@ class DBHelper {
     if (_db != null) {
       return _db!;
     }
-    await _initDatabaseFactory();
     _db = await initDB();
     return _db!;
-  }
-
-  static Future<void> _initDatabaseFactory() async {
-    // Initialize the FFI
-    //sqfliteFfiInit();
-    sqfliteFfiInit();
-    // Set the database factory for FFI
-    databaseFactory = databaseFactoryFfiWeb;
   }
 
   static initDB() async {
