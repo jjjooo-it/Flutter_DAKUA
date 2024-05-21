@@ -10,7 +10,7 @@ class LoadingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(),
-      body: Consumer<ResultPageViewModel>(
+      body: Consumer<HomePageViewModel>(
           builder: (context, viewModel, _) {
             if (viewModel.result.loading) {
               return Center(

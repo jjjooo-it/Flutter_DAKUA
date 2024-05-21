@@ -70,7 +70,7 @@ class HistoryDetailPage extends StatelessWidget {
                       // Add your button's onPressed logic here
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.lightGreen[100],
+                      backgroundColor: Colors.lightGreen[100],
                       elevation: 0,
                     ),
                     child: Column(

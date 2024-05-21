@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:mobileplatform_project/view/widget/appBar.dart';
-import 'package:mobileplatform_project/view/home/resultPage.dart';
+import 'package:mobileplatform_project/view/home/resultDetailPage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class HomePage extends StatefulWidget {
@@ -368,7 +368,7 @@ class _HomePageState extends State<HomePage> {
   void _navigateToResultPage(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ResultPage()),
+      MaterialPageRoute(builder: (context) => ResultDetailPage()),
     );
   }
 
