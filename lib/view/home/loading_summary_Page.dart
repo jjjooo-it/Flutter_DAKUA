@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:mobileplatform_project/view/widget/appBar.dart';
 import 'package:mobileplatform_project/viewModel/homePage_viewModel.dart';
 
-class LoadingPage extends StatelessWidget {
+class LoadingSummaryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

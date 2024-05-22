@@ -10,15 +10,15 @@ class HomePageViewModel extends ChangeNotifier {
   late File _file;
 
   HomePageViewModel() {
-    _file = File(
-        attachedFileName: ""
-    );
+    _file = File(attachedFileName: "");
     _aiData = AIData(
       loading: false,
       dataReceived: false,
       summarizeText: null,
     );
   }
+
+  String? get attachedFileName => _file.attachedFileName;
 
   /////////////////////파일 첨부 동작/////////////////////
   // 파일 첨부 메서드
@@ -48,7 +48,25 @@ class HomePageViewModel extends ChangeNotifier {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text("요약 기록을 저장하시겠습니까?"),
-          content: Text("저장 폴더"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("저장 폴더 선택"),
+              TextFormField(
+                onChanged: (value) {
+                  // 폴더 이름을 저장합니다.
+                },
+              ),
+              SizedBox(height: 10),
+              Text("저장 이름"),
+              TextFormField(
+                onChanged: (value) {
+                  // 파일 이름을 저장합니다.
+                },
+              ),
+            ],
+          ),
           actions: [
             TextButton(
               onPressed: () {
@@ -72,6 +90,7 @@ class HomePageViewModel extends ChangeNotifier {
   ////////////////AI 요약 데이터 받아오는 동작////////////////
   void resetDataReceived() {
     _aiData.dataReceived = false;
+    notifyListeners();
   }
 
   AIData get result => _aiData;
