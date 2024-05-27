@@ -1,8 +1,6 @@
 //파일 첨부 동작 처리
 // fileAttach_dataSource <-> homePage
-
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import '../dataSource/fileAttach_dataSource.dart';
@@ -39,18 +37,18 @@ class FileAttachViewModel extends ChangeNotifier {
     }
   }
 
-  // Future<void> uploadFile() async {
-  //   loading = true;
-  //   notifyListeners();
-  //
-  //   if (filePath != null) {
-  //     AttachedFile attachedFile = AttachedFile(filePath: filePath!);
-  //     await dataSource.uploadFile(user, attachedFile);
-  //   } else {
-  //     print('No file selected or user ID is empty');
-  //   }
-  //
-  //   loading = false;
-  //   notifyListeners();
-  // }
+// Future<void> uploadFile() async {
+//   loading = true;
+//   notifyListeners();
+//
+//   if (filePath != null) {
+//     AttachedFile attachedFile = AttachedFile(filePath: filePath!);
+//     await dataSource.uploadFile(user, attachedFile);
+//   } else {
+//     print('No file selected or user ID is empty');
+//   }
+//
+//   loading = false;
+//   notifyListeners();
+// }
 }

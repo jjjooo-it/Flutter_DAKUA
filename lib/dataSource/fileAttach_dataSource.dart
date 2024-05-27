@@ -12,12 +12,13 @@ import '../model/user.dart';
 
 
 class FileAttachDataSource {
+  bool loading = false;
   Future<void> uploadFile(User user, Uint8List voiceFile, String fileName) async {
     var uri = Uri.parse('http://220.149.250.118:8000/Audio_preprocess');
 
     var request = http.MultipartRequest('POST', uri);
     request.fields['user_id'] = user.userId!;
-
+    loading = true;
     // 파일을 MultipartFile로 변환하여 요청에 추가
     request.files.add(
       http.MultipartFile.fromBytes(
@@ -27,6 +28,7 @@ class FileAttachDataSource {
         contentType: MediaType.parse(lookupMimeType(fileName) ?? 'application/octet-stream'),
       ),
     );
+    loading = false;
 
     try {
       var streamedResponse = await request.send();
