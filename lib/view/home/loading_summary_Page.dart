@@ -36,7 +36,7 @@ class LoadingSummaryPage extends StatelessWidget {
               ),
             );
           } else {
-            return HomePage();
+            return HomePage(user: null,);
           }
         },
       ),
