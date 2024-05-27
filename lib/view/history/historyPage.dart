@@ -2,23 +2,110 @@ import 'package:flutter/material.dart';
 import 'package:mobileplatform_project/model/user.dart';
 import 'package:mobileplatform_project/view/widget/appBar.dart';
 import 'package:mobileplatform_project/view/history/historyDetailPage.dart';
+import 'package:http/http.dart' as http;
+import '../../model/user.dart';
+import 'dart:convert';
 
 class HistoryPage extends StatefulWidget {
-  const HistoryPage({Key? key}) : super(key: key);
+  final User user;
+  const HistoryPage({Key? key, required this.user}) : super(key: key);
 
   @override
   _HistoryPageState createState() => _HistoryPageState();
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  List<String> folders = ["기본 폴더"];
-  List<String> files = ['파일1', '파일2'];
+  List<String> folders = [];
+  List<List<String>> files = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchFolderAndFiles(widget.user);
+  }
+
+  Future<void> fetchFolderAndFiles(User user) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://220.149.250.118:8000/Get_Folder_Name/?user_id=${user.userId}'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json; charset=UTF-8',
+        },
+      );
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
+
+        // Parse and extract folders and files
+        List<String> fetchedFolders = [];
+        List<List<String>> fetchedFiles = [];
+        for (var entry in data) {
+          if (entry['folder'] != null) {
+            String folder = entry['folder'];
+            List<String> fileList = List<String>.from(entry['files']);
+            if (fileList.isNotEmpty) {
+              fetchedFolders.add(folder);
+              fetchedFiles.add(fileList);
+            }
+            else{
+              fetchedFolders.add(folder);
+              List<String> fileList= [];
+              fetchedFiles.add(fileList);
+
+            }
+          }
+        }
+
+        setState(() {
+          folders = fetchedFolders;
+          files = fetchedFiles;
+          isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to load folders and files');
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print('Error fetching folders and files: $e');
+    }
+  }
+
+  Future<void> createFolder(String folderName, User user) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://220.149.250.118:8000/Create_Folder/'),
+        body: jsonEncode(<String, String>{
+          'user_id': user.userId.toString(),
+          'folder_name': folderName,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          folders.add(folderName);
+          files.add([]); // Adding an empty file list for the new folder
+        });
+      } else {
+        throw Exception('Failed to create folder');
+      }
+    } catch (e) {
+      print('Error creating folder: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(),
-      body: SingleChildScrollView(
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
         child: Center(
           child: Column(
             children: [
@@ -60,12 +147,16 @@ class _HistoryPageState extends State<HistoryPage> {
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
                 children: List.generate(folders.length, (index) {
                   String folderName = folders[index];
+                  List<String> folderFiles = files[index];
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => HistoryDetailPage(folder: folderName, files: files,),
+                          builder: (context) => HistoryDetailPage(
+                            folder: folderName,
+                            files: folderFiles,
+                          ),
                         ),
                       );
                     },
@@ -113,9 +204,7 @@ class _HistoryPageState extends State<HistoryPage> {
               onPressed: () {
                 Navigator.of(context).pop();
                 if (folderName.isNotEmpty) {
-                  setState(() {
-                    folders.add(folderName);
-                  });
+                  createFolder(folderName, widget.user);
                 }
               },
               child: Text("확인"),

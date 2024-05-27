@@ -23,7 +23,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     super.initState();
     _user = widget.user;
     _pages = [
-      HistoryPage(),
+      HistoryPage(user: _user),
       HomePage(user: _user),
       SettingPage(),
     ];
