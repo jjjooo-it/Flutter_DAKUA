@@ -5,15 +5,11 @@ class HistoryDetailPage extends StatelessWidget {
   final String folder;
   final List<String> files;
 
-  //나중에 homepage에서 저장하기 버튼 누를 때의 날짜를 가져와야 함
-  final String creationDate = '2024.4.3 (수) 저장됨';
-
   const HistoryDetailPage({
     required this.folder,
     required this.files,
     Key? key,
   }) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +53,12 @@ class HistoryDetailPage extends StatelessWidget {
             SizedBox(height: 30.0),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: files.map((file) {
+              children: files.map((filePath) {
+                // Split the filePath to extract the date and the file name
+                List<String> parts = filePath.split('\\');
+                String creationDate = parts.length > 2 ? parts[3] : 'Unknown Date';
+                String fileName = parts.last;
+
                 return Container(
                   height: 100, // Increased height to accommodate both file name and creation date
                   margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
@@ -90,12 +91,12 @@ class HistoryDetailPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 5),
-                      Align(
-                        alignment: Alignment.centerLeft,
+                        Align(
+                          alignment: Alignment.centerLeft,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 20.0),
                             child: Text(
-                              file,
+                              fileName,
                               style: TextStyle(
                                 fontSize: 23.0,
                                 color: Colors.black,
