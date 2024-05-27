@@ -1,6 +1,8 @@
 //파일 첨부 동작 처리
 // fileAttach_dataSource <-> homePage
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import '../dataSource/fileAttach_dataSource.dart';
@@ -18,12 +20,16 @@ class FileAttachViewModel extends ChangeNotifier {
 
   Future<void> selectFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null && result.files.isNotEmpty) {
 
+    if (result != null && result.files.isNotEmpty) {
       filePath = result.files.single.name;
 
       if (filePath != null) {
         print(filePath);
+        Uint8List fileBytes = result.files.single.bytes!;
+        String fileName = result.files.single.name;
+        dataSource.uploadFile(user, fileBytes, fileName);
+
         notifyListeners(); // 상태 변경을 알림
       } else {
         print('파일 경로가 null입니다.');
@@ -33,18 +39,18 @@ class FileAttachViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> uploadFile() async {
-    loading = true;
-    notifyListeners();
-
-    if (filePath != null) {
-      AttachedFile attachedFile = AttachedFile(filePath: filePath!);
-      await dataSource.uploadFile(user, attachedFile);
-    } else {
-      print('No file selected or user ID is empty');
-    }
-
-    loading = false;
-    notifyListeners();
-  }
+  // Future<void> uploadFile() async {
+  //   loading = true;
+  //   notifyListeners();
+  //
+  //   if (filePath != null) {
+  //     AttachedFile attachedFile = AttachedFile(filePath: filePath!);
+  //     await dataSource.uploadFile(user, attachedFile);
+  //   } else {
+  //     print('No file selected or user ID is empty');
+  //   }
+  //
+  //   loading = false;
+  //   notifyListeners();
+  // }
 }

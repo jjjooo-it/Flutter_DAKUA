@@ -2,6 +2,7 @@
 //end-point : Audio_preprocess
 //post 값 : file, user_id
 
+import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
@@ -10,24 +11,35 @@ import '../model/user.dart';
 
 
 class FileAttachDataSource {
-  final String baseUrl = "*****"; //실제 주소로 바꿔야 함
 
-  Future<void> uploadFile(User user, AttachedFile attachedFile) async {
-    var request = http.MultipartRequest('POST', Uri.parse('$baseUrl/Audio_preprocess'))
-      ..fields['user_id'] = user.userId!
-      ..files.add(
-        await http.MultipartFile.fromPath(
-          'file',
-          attachedFile.filePath,
-          contentType: MediaType.parse(lookupMimeType(attachedFile.filePath) ?? 'application/octet-stream'),
-        ),
-      );
+  Future<void> uploadFile(User user, Uint8List voiceFile, String fileName) async {
+    var uri = Uri.parse('http://220.149.250.118:8000/Audio_preprocess');
 
-    var response = await request.send();
-    if (response.statusCode == 200) {
-      print('파일 업로드 성공');
-    } else {
-      print('파일 업로드 실패');
+    var request = http.MultipartRequest('POST', uri);
+    request.fields['user_id'] = user.userId!;
+
+    // 파일을 MultipartFile로 변환하여 요청에 추가
+    request.files.add(
+      http.MultipartFile.fromBytes(
+        'file',
+        voiceFile,
+        filename: fileName,
+        contentType: MediaType.parse(lookupMimeType(fileName) ?? 'application/octet-stream'),
+      ),
+    );
+
+    try {
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+
+      if (response.statusCode == 200) {
+        print('File uploaded successfully');
+      } else {
+        print('Failed to upload file: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error uploading file: $e');
     }
   }
+
 }

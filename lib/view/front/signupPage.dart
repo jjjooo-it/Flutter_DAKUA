@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobileplatform_project/datasource/userInitial_dataSource.dart';
 import 'package:provider/provider.dart';
 import 'package:mobileplatform_project/viewModel/signupPage_viewModel.dart';
-import '../../dataSource/userInitial_dataSource.dart';
 
 class SignUpPage extends StatelessWidget {
   @override
