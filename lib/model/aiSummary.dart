@@ -3,6 +3,8 @@
 //post할 데이터는 user.dart
 //summarizeText, image
 
+import 'dart:convert';
+
 class AISummary{
   String? summaryText;
   String? image;
@@ -14,7 +16,7 @@ class AISummary{
 
   factory AISummary.fromJson(Map<String, dynamic> json) {
     return AISummary(
-      summaryText: json['summary_text'],
+      summaryText: json['summarize_text'] != null ? utf8.decode(json['summarize_text'].codeUnits) : null,
       image: json['image'],
     );
   }

@@ -5,9 +5,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 import '../../dataSource/aiProcess_dataSource.dart';
 import '../../dataSource/fileAttach_dataSource.dart';
+import '../../dataSource/saveSummary_dataSource.dart';
 import '../../model/user.dart';
 import '../../viewModel/aiProcess_viewModel.dart';
 import '../../viewModel/fileAttach_viewModel.dart';
+import '../../viewModel/saveSummary_viewModel.dart';
 import '../widget/appBar.dart';
 import 'loading_summary_Page.dart';
 import 'resultDetailPage.dart';
@@ -32,9 +34,13 @@ class _HomePageState extends State<HomePage> {
           create: (context) =>
               FileAttachViewModel(FileAttachDataSource(), widget.user),
         ),
+        ChangeNotifierProvider<SaveSummaryViewModel>(
+          create: (context) =>
+              SaveSummaryViewModel(SaveSummaryDataSource()),
+        ),
       ],
-      child: Consumer2<AIProcessViewModel, FileAttachViewModel>(
-        builder: (context, aiViewModel, fileAttachViewModel, child) {
+      child: Consumer3<AIProcessViewModel, FileAttachViewModel,SaveSummaryViewModel>(
+        builder: (context, aiViewModel, fileAttachViewModel,saveSummaryViewModel, child) {
           if (aiViewModel.loading) {
             return LoadingSummaryPage();
           } else {
@@ -136,12 +142,14 @@ class _HomePageState extends State<HomePage> {
                                       BorderRadius.circular(40.0),
                                     ),
                                     child: ElevatedButton(
-                                      onPressed: () => (context),
+                                      onPressed: () {
+                                        saveSummaryViewModel.showSaveRecordDialog(context, widget.user.userId!);
+                                      },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.transparent,
                                         elevation: 0,
                                       ),
-                                      child: Text(
+                                       child: Text(
                                         '기록 저장하기',
                                         style: TextStyle(
                                           fontSize: 18.0,
@@ -153,34 +161,6 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 SizedBox(height: 20),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed: () =>
-                                          _navigateToResultPage(context),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            '줄글로 보기',
-                                            style: TextStyle(
-                                              fontSize: 16.0,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          SizedBox(width: 10),
-                                          Icon(
-                                            Icons.arrow_forward,
-                                            color: Colors.black,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(width: 20),
-                                  ],
-                                ),
                               ],
                             );
                           } else {
@@ -315,7 +295,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
   void _navigateToResultPage(BuildContext context) {
     Navigator.push(
       context,

@@ -14,7 +14,6 @@ class SignUpViewModel extends ChangeNotifier {
   }
 
 
-
   void signUp() async {
     try {
       if (user.username.isNotEmpty &&
@@ -40,8 +39,6 @@ class SignUpViewModel extends ChangeNotifier {
 
           }
         }
-
-
         await postUserId(user.id);
         print("finish api call");
 
