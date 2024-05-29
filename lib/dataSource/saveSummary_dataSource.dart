@@ -8,32 +8,37 @@ import 'package:http/http.dart' as http;
 
 class SaveSummaryDataSource {
   Future<void> saveUserData(String userId, String folderName, String fileName) async {
-    var uri = Uri.parse('http://220.149.250.118:8000/Save_user_data');
+    final uri = Uri.parse('http://220.149.250.118:8000/Save_user_data/');
+
     final response = await http.post(
       uri,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: {
         'user_id': userId,
         'folder_name': folderName,
         'file_name': fileName,
-      }),
+      },
     );
 
     if (response.statusCode != 200) {
-      throw Exception('Failed to save user data');
+      throw Exception('Failed to save user data: ${response.body}');
     }
   }
 
+
+
+
   Future<List<Map<String, dynamic>>> fetchFolderData(String userId) async {
-    var uri = Uri.parse('http://220.149.250.118:8000/Get_Folder_Name');
     final response = await http.post(
-      uri,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'user_id': userId}),
+      Uri.parse('http://220.149.250.118:8000/Get_Folder_Name/?user_id=${userId}'),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json; charset=UTF-8',
+      },
     );
 
     if (response.statusCode == 200) {
-      List<dynamic> responseData = jsonDecode(response.body);
+      final List<dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
       return List<Map<String, dynamic>>.from(responseData);
     } else {
       throw Exception('Failed to fetch folder data');

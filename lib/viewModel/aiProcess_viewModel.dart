@@ -22,7 +22,6 @@ class AIProcessViewModel extends ChangeNotifier {
 
     try {
       final responseData = await dataSource.postUserId(userId);
-      print(responseData);
       aiSummary = AISummary.fromJson(responseData);
       dataReceived = true;
     } catch (error) {

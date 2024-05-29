@@ -156,6 +156,7 @@ class _HistoryPageState extends State<HistoryPage> {
                           builder: (context) => HistoryDetailPage(
                             folder: folderName,
                             files: folderFiles,
+                            user: widget.user,
                           ),
                         ),
                       );
