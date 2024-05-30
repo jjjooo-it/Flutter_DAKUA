@@ -1,0 +1,63 @@
+{
+  "login": "登录",
+  "signup": "注册",
+  "not_a_member": "还不是会员？",
+  "id": "账号",
+  "password": "密码",
+
+
+  "signup": "注册",
+  "name": "姓名",
+  "id": "ID",
+  "password": "密码",
+  "country": "国家",
+  "sign_up_button": "注册",
+
+
+  "pageTitle": "历史记录",
+  "folderPrefix": "全部    >    ",
+  "unknownDateText": "未知日期",
+  "getUserDataApiCallText": "getUserData API 调用中",
+  "userDataDetails": "用户 ID：%s，文件夹名称：%s，日期：%s，文件名称：%s",
+  "successMessage": "成功：%s",
+  "errorMessage": "文件夹创建失败",
+
+
+"past_records": "过去的记录",
+  "new_folder": "新文件夹",
+  "add_new_folder": "添加新文件夹",
+  "folder_name": "文件夹名称",
+  "confirm": "确认",
+  "cancel": "取消",
+
+
+
+  "appBarTitle": "主页",
+  "uploadFileButton": "上传文件",
+  "fileSelected": "已选择文件：",
+  "noFileSelected": "选择文件",
+  "generateSummaryButton": "生成摘要",
+  "summaryGeneratingMessage": "摘要大约需要2分钟时间！",
+  "advertisementMessage": "广告咨询：dakua@dankook.ac.kr",
+  "recordAttachmentTitle": "录音文件附件",
+  "otherFileButton": "上传其他文件",
+  "saveRecordButton": "保存记录",
+  "noAttachedFileMessage": "没有附加文件。",
+  "noSummaryMessage": "没有摘要内容。",
+
+
+  "loadingText": "正在生成摘要。\n请稍候。",
+
+
+  "systemLanguageSetting": "系统语言设置",
+  "koreanLanguage": "韩语",
+  "chineseLanguage": "中文",
+  "cancelButton": "取消",
+  "logoutButton": "注销",
+
+
+  "historyLabel": "历史记录",
+  "homeLabel": "首页",
+  "settingLabel": "设置"
+
+}

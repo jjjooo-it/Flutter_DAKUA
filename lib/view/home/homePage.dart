@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                                     SizedBox(width: 20),
                                     ElevatedButton(
                                       onPressed: () {
-                                        // aiViewModel.resetDataReceived();
+                                        aiViewModel.dataReceived = false;
                                       },
                                       child: Text(
                                         '다른 파일 올리기',
