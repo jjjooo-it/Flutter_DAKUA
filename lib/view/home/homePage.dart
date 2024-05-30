@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +22,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -33,6 +33,7 @@ class _HomePageState extends State<HomePage> {
         ChangeNotifierProvider<FileAttachViewModel>(
           create: (context) =>
               FileAttachViewModel(FileAttachDataSource(), widget.user),
+
         ),
         ChangeNotifierProvider<SaveSummaryViewModel>(
           create: (context) =>
@@ -66,9 +67,13 @@ class _HomePageState extends State<HomePage> {
                                     SizedBox(width: 20),
                                     ElevatedButton(
                                       onPressed: () {
-                                        aiViewModel.dataReceived = false;
+                                        setState(() {
+                                          aiViewModel.dataReceived = false;
+
+                                        });
                                       },
                                       child: Text(
+
                                         '다른 파일 올리기',
                                         style: TextStyle(
                                           fontSize: 18.0,
@@ -90,9 +95,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      fileAttachViewModel.filePath != null
-                                          ? '${fileAttachViewModel.filePath}'
-                                          : '첨부한 파일이 없습니다.',
+                                      '파일 첨부를 완료했습니다.',
                                       style: TextStyle(fontSize: 16.0),
                                     ),
                                   ),
