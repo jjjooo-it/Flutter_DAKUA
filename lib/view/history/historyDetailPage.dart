@@ -1,9 +1,12 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:mobileplatform_project/view/widget/appBar.dart';
+import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import '../../model/user.dart';
+import '../../viewModel/aiProcess_viewModel.dart';
+import '../../dataSource/aiProcess_dataSource.dart';
+import '../widget/appBar.dart';
+import 'historySummaryPage.dart';
 
 class HistoryDetailPage extends StatelessWidget {
   final String folder;
@@ -57,30 +60,27 @@ class HistoryDetailPage extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: files.map((filePath) {
-                // Split the filePath to extract the date and the file name
                 List<String> parts = filePath.split('\\');
-                print(parts);
-                String folderName =
-                parts.length > 2 ? parts[2] : 'Unknown Date';
-                String creationDate =
-                parts.length > 2 ? parts[3] : 'Unknown Date';
+                String folderName = parts.length > 2 ? parts[2] : 'Unknown Date';
+                String creationDate = parts.length > 2 ? parts[3] : 'Unknown Date';
                 String fileName = parts.last;
 
                 return Container(
                   height: 100,
-                  // Increased height to accommodate both file name and creation date
-                  margin:
-                  EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
+                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
                     color: Colors.lightGreen[100],
                   ),
                   child: ElevatedButton(
-                    onPressed: () {
-                      // Add your button's onPressed logic here
-                      // call get user text data/folder api
-                      getUserData(
-                          user.userId, folderName, creationDate, fileName);
+                    onPressed: () async {
+                      var data = await getUserData(user.userId, folderName, creationDate, fileName);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HistorySummaryPage(user: user, data: data),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.lightGreen[100],
@@ -128,15 +128,11 @@ class HistoryDetailPage extends StatelessWidget {
     );
   }
 
-
-  Future<void> getUserData(String? user_id, String folder_name, String date,
-      String file_name) async {
+  Future<Map<String, String?>> getUserData(String? userId, String folderName, String date, String fileName) async {
     print("getUserData api call ");
-    print(
-        "User ID: $user_id, Folder Name: $folder_name, Date: $date, File Name: $file_name");
+    print("User ID: $userId, Folder Name: $folderName, Date: $date, File Name: $fileName");
     try {
-      final uri = Uri.parse(
-          'http://220.149.250.118:8000/Get_User_text_data/folder/');
+      final uri = Uri.parse('http://220.149.250.118:8000/Get_User_text_data/folder/');
       final response = await http.post(
         uri,
         headers: {
@@ -144,21 +140,29 @@ class HistoryDetailPage extends StatelessWidget {
           'Accept': 'application/json; charset=UTF-8',
         },
         body: jsonEncode({
-          'user_id': user_id,
-          'folder_name': folder_name,
+          'user_id': userId,
+          'folder_name': folderName,
           'date': date,
-          'file_name': file_name,
+          'file_name': fileName,
         }),
       );
 
       if (response.statusCode == 200) {
         final decodedResponse = json.decode(utf8.decode(response.bodyBytes));
         print('Success: $decodedResponse');
+
+        // Assuming the response contains the image and summary text
+        String? image = decodedResponse['image'];
+        String? text_data = decodedResponse['text_data'];
+        String? full_text_data = decodedResponse['full_text_data'];
+
+        return {'image': image, 'text_data': text_data, 'full_text_data':full_text_data};
       } else {
         throw Exception('Failed to create folder');
       }
     } catch (e) {
       print('Error getUserData: $e');
+      return {};
     }
   }
 }
