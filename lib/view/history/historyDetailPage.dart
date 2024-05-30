@@ -1,9 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:mobileplatform_project/view/widget/appBar.dart';
 import 'package:http/http.dart' as http;
 import '../../model/user.dart';
+
 
 class HistoryDetailPage extends StatelessWidget {
   final String folder;
@@ -153,7 +153,7 @@ class HistoryDetailPage extends StatelessWidget {
 
       if (response.statusCode == 200) {
         final decodedResponse = json.decode(utf8.decode(response.bodyBytes));
-        print('Success: $decodedResponse');
+        //print('Success: $decodedResponse');
       } else {
         throw Exception('Failed to create folder');
       }
