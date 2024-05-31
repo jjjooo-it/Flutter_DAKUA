@@ -1,16 +1,16 @@
 # 🌐 Front with FLUTTER
 
 
-## MVVM 구조로 코드를 작성
-* dataSource : 데이터를 가져오는 영역
-* dbHelper : Sqlite 사용을 위한 DB 제어 
-* model : 데이터 설계
-* view(front/history/home/setting/widget) : 사용자에게 보여지는 영역
-* viewModel : view의 상태 관리
+> ## MVVM 구조로 코드를 작성
+> * dataSource : 데이터를 가져오는 영역
+> * dbHelper : Sqlite 사용을 위한 DB 제어 
+> * model : 데이터 설계
+> * view(front/history/home/setting/widget) : 사용자에게 보여지는 영역
+> * viewModel : view의 상태 관리
 
 
-## SQLite를 통한 회원가입/로그인/로그아웃 구현
-[SQLite](https://www.sqlite.org/)
+
+## SQLite를 통한 회원가입/로그인/로그아웃 구현 [SQLite](https://www.sqlite.org/)
 <pre><code>
 static Future<void> _initDatabaseFactory() async {
     sqfliteFfiInit();
@@ -32,9 +32,9 @@ static Future<void> _initDatabaseFactory() async {
 </code></pre>
 
 
+
 ## 10초마다 넘겨지는 광고바
-* carousel_slider 패키지 이용
-[CarouselSlider](https://pub.dev/packages/carousel_slider)
+* carousel_slider 패키지 이용 [carousel_slider](https://pub.dev/packages/carousel_slider)
 * 여러 옵션을 지정할 수 있음
 <pre><code>
 options: CarouselOptions(
@@ -56,15 +56,17 @@ options: CarouselOptions(
       ),
 </code></pre>
 
+
+
 ## 아코디언 형식으로 요약 내용 보기
 * isExpand 변수를 이용하여 버튼 클릭시 내용을 대치
 
 
+
 ## 언어 설정(한국어/중국어)
-* flutter_localization 패키지 이용
-[flutter_localization](https://pub.dev/packages/flutter_localization)
+* flutter_localization 패키지 이용 [flutter_localization](https://pub.dev/packages/flutter_localization)
+
 
 
 ## 로딩 바 
-* flutter_spinkit 패키지 이용
-[SpinkitWave](https://pub.dev/packages/flutter_spinkit)
+* flutter_spinkit 패키지 이용 [flutter_spinkit](https://pub.dev/packages/flutter_spinkit)
