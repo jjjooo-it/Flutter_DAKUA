@@ -60,7 +60,7 @@ options: CarouselOptions(
 
 <br/><br/>
 ## 언어 설정(한국어/중국어)
-* easy_localization 패키지 이용 [flutter_localization](https://pub.dev/packages/easy_localization)
+* easy_localization 패키지 이용 [easy_localization](https://pub.dev/packages/easy_localization)
 
 <br/><br/>
 ## 로딩 바 
