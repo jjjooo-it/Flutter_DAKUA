@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileplatform_project/model/saveSummary.dart';
 import '../dataSource/saveSummary_dataSource.dart';
@@ -55,17 +56,17 @@ class SaveSummaryViewModel extends ChangeNotifier {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return AlertDialog(
-              title: Text("요약 기록을 저장하시겠습니까?"),
+              title: Text("saveRecordDialogTitle".tr()),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("저장 폴더 선택"),
+                  Text("saveRecordFolderLabel".tr()),
                   isLoadingFolders
                       ? CircularProgressIndicator()
                       : DropdownButtonFormField<String>(
                     value: selectedFolder,
-                    hint: Text("폴더 선택"),
+                    hint: Text("saveRecordFolderHint".tr()),
                     onChanged: (String? newValue) {
                       setState(() {
                         selectedFolder = newValue;
@@ -85,7 +86,7 @@ class SaveSummaryViewModel extends ChangeNotifier {
                     }).toList(),
                   ),
                   SizedBox(height: 10),
-                  Text("저장 이름"),
+                  Text("saveRecordNameLabel".tr()),
                   TextFormField(
                     onChanged: (value) {
                       print("setFileName $value");
@@ -104,18 +105,18 @@ class SaveSummaryViewModel extends ChangeNotifier {
                     Navigator.of(context).pop();
                     try {
                       await saveUserData(userId);
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("파일이 저장되었습니다.")));
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("saveSuccessMessage".tr())));
                     } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("파일 저장에 실패했습니다.")));
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("saveFailedMessage".tr())));
                     }
                   },
-                  child: Text("예"),
+                  child: Text("saveButtonText".tr()),
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text("아니요"),
+                  child: Text("cancelButtonText".tr()),
                 ),
               ],
             );

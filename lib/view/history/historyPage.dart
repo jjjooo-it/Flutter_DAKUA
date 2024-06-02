@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileplatform_project/model/user.dart';
 import 'package:mobileplatform_project/view/widget/appBar.dart';
@@ -111,7 +112,7 @@ class _HistoryPageState extends State<HistoryPage> {
             children: [
               SizedBox(height: 20.0),
               Text(
-                '지난 기록',
+                'past_records'.tr(),
                 style: TextStyle(
                   fontSize: 25.0,
                 ),
@@ -133,7 +134,7 @@ class _HistoryPageState extends State<HistoryPage> {
                         _addFolder(context);
                       },
                       icon: Icon(Icons.create_new_folder),
-                      label: Text('새폴더'),
+                      label: Text('new_folder'.tr()),
                     ),
                   ],
                 ),
@@ -193,12 +194,12 @@ class _HistoryPageState extends State<HistoryPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("새 폴더 추가"),
+          title: Text("add_new_folder".tr()),
           content: TextField(
             onChanged: (value) {
               folderName = value;
             },
-            decoration: InputDecoration(hintText: "폴더 이름"),
+            decoration: InputDecoration(hintText: "folder_name".tr()),
           ),
           actions: [
             TextButton(
@@ -208,13 +209,13 @@ class _HistoryPageState extends State<HistoryPage> {
                   createFolder(folderName, widget.user);
                 }
               },
-              child: Text("확인"),
+              child: Text("confirm".tr()),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("취소"),
+              child: Text("cancel".tr()),
             ),
           ],
         );

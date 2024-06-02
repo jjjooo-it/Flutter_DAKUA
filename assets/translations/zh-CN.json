@@ -1,26 +1,20 @@
 {
-  "login": "登录",
+  "login_button": "登录",
   "signup": "注册",
-  "not_a_member": "还不是会员？",
+  "not_a_member_yet": "还不是会员？",
   "id": "账号",
   "password": "密码",
 
 
-  "signup": "注册",
   "name": "姓名",
-  "id": "ID",
-  "password": "密码",
-  "country": "国家",
+  "korea" : "韩国",
+  "china" : "中国",
+  "cancel" : "取消 ",
   "sign_up_button": "注册",
 
 
   "pageTitle": "历史记录",
-  "folderPrefix": "全部    >    ",
-  "unknownDateText": "未知日期",
-  "getUserDataApiCallText": "getUserData API 调用中",
-  "userDataDetails": "用户 ID：%s，文件夹名称：%s，日期：%s，文件名称：%s",
-  "successMessage": "成功：%s",
-  "errorMessage": "文件夹创建失败",
+  "folderPrefix": "            全部    >    ",
 
 
 "past_records": "过去的记录",
@@ -28,22 +22,24 @@
   "add_new_folder": "添加新文件夹",
   "folder_name": "文件夹名称",
   "confirm": "确认",
-  "cancel": "取消",
+
+  "no_summary" : "没有概括的内容" ,
+  "no_full" : "没有全部内容",
 
 
 
-  "appBarTitle": "主页",
   "uploadFileButton": "上传文件",
-  "fileSelected": "已选择文件：",
   "noFileSelected": "选择文件",
   "generateSummaryButton": "生成摘要",
   "summaryGeneratingMessage": "摘要大约需要2分钟时间！",
+  "summarization" : "DAKUA在授课摘要方面非常出色",
   "advertisementMessage": "广告咨询：dakua@dankook.ac.kr",
   "recordAttachmentTitle": "录音文件附件",
   "otherFileButton": "上传其他文件",
   "saveRecordButton": "保存记录",
   "noAttachedFileMessage": "没有附加文件。",
   "noSummaryMessage": "没有摘要内容。",
+  "completeSummary": "摘要生成完毕",
 
 
   "loadingText": "正在生成摘要。\n请稍候。",
@@ -52,12 +48,35 @@
   "systemLanguageSetting": "系统语言设置",
   "koreanLanguage": "韩语",
   "chineseLanguage": "中文",
-  "cancelButton": "取消",
-  "logoutButton": "注销",
+  "logout": "注销",
 
 
   "historyLabel": "历史记录",
   "homeLabel": "首页",
-  "settingLabel": "设置"
+  "settingLabel": "设置",
+
+
+
+  "usernameError": "请输入用户名",
+  "passwordError": "请输入密码",
+  "loginFailedTitle": "登录失败",
+  "loginFailedContent": "用户名或密码错误",
+  "confirmButtonText": "确认",
+
+  "saveRecordDialogTitle": "确定要保存摘要记录吗？",
+  "saveRecordFolderLabel": "选择保存文件夹",
+  "saveRecordFolderHint": "选择文件夹",
+  "saveRecordNameLabel": "保存名称",
+  "saveButtonText": "是",
+  "cancelButtonText": "否",
+  "saveSuccessMessage": "文件已保存",
+  "saveFailedMessage": "文件保存失败 ",
+
+  "signUpSuccessTitle": "祝贺你！",
+  "signUpSuccessContent": "会员注册已完成",
+  "signUpSuccessButton": "确认",
+  "signUpErrorTitle": "谬误",
+  "signUpErrorContent": "请输入所有必要信息"
+
 
 }

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mobileplatform_project/view/widget/appBar.dart';
@@ -14,7 +15,7 @@ class LoadingSummaryPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '요약 생성 중입니다. \n 잠시만 기다려 주세요.',
+                'loadingText'.tr(),
                 style: TextStyle(fontSize: 20.0),
                 textAlign: TextAlign.center,
               ),

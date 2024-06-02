@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:mobileplatform_project/viewModel/signupPage_viewModel.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class SignUpPage extends StatelessWidget {
   @override
@@ -32,7 +33,7 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-  String selectedCountry = '국가';
+  String selectedCountry = 'korea'.tr();
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +71,7 @@ class _SignUpFormState extends State<SignUpForm> {
           child: TextField(
             onChanged: (value) => viewModel.user.username = value.toString(),
             decoration: InputDecoration(
-              labelText: '이름',
+              labelText: 'name'.tr(),
               border: InputBorder.none,
               contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             ),
@@ -101,7 +102,7 @@ class _SignUpFormState extends State<SignUpForm> {
               viewModel.user.userId = value.toString();
             },
             decoration: InputDecoration(
-              labelText: '아이디',
+              labelText: 'id'.tr(),
               border: InputBorder.none,
               contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             ),
@@ -129,7 +130,7 @@ class _SignUpFormState extends State<SignUpForm> {
           child: TextField(
             onChanged: (value) => viewModel.user.password = value.toString(),
             decoration: InputDecoration(
-              labelText: '비밀번호',
+              labelText: 'password'.tr(),
               border: InputBorder.none,
               contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             ),
@@ -157,29 +158,29 @@ class _SignUpFormState extends State<SignUpForm> {
                     CupertinoActionSheetAction(
                       onPressed: () {
                         setState(() {
-                          selectedCountry = '한국';
+                          selectedCountry = 'korea'.tr();
                           viewModel.user.country = selectedCountry;
                         });
                         Navigator.pop(context);
                       },
-                      child: Text('한국'),
+                      child: Text('korea'.tr()),
                     ),
                     CupertinoActionSheetAction(
                       onPressed: () {
                         setState(() {
-                          selectedCountry = '중국';
+                          selectedCountry = 'china'.tr();
                           viewModel.user.country = selectedCountry;
                         });
                         Navigator.pop(context);
                       },
-                      child: Text('중국'),
+                      child: Text('china'.tr()),
                     ),
                   ],
                   cancelButton: CupertinoActionSheetAction(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text('취소'),
+                    child: Text('cancel'.tr()),
                   ),
                 );
               },
@@ -224,7 +225,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 elevation: 0,
               ),
               child: Text(
-                '회원가입하기',
+                'sign_up_button'.tr(),
                 style: TextStyle(fontSize: 18.0, color: Colors.white, fontWeight: FontWeight.bold,),
               ),
             ),

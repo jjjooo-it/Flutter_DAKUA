@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
@@ -73,8 +74,7 @@ class _HomePageState extends State<HomePage> {
                                         });
                                       },
                                       child: Text(
-
-                                        '다른 파일 올리기',
+                                        'otherFileButton'.tr(),
                                         style: TextStyle(
                                           fontSize: 18.0,
                                           color: Colors.black,
@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      '파일 첨부를 완료했습니다.',
+                                      'completeSummary'.tr(),
                                       style: TextStyle(fontSize: 16.0),
                                     ),
                                   ),
@@ -122,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                                   child: Text(
                                     aiViewModel.aiSummary?.summaryText != null
                                         ? aiViewModel.aiSummary!.summaryText!
-                                        : '요약된 내용이 없습니다.',
+                                        : 'noSummaryMessage'.tr(),
                                     style: TextStyle(fontSize: 16.0),
                                     textAlign: TextAlign.center,
                                   ),
@@ -153,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                                         elevation: 0,
                                       ),
                                        child: Text(
-                                        '기록 저장하기',
+                                        'saveRecordButton'.tr(),
                                         style: TextStyle(
                                           fontSize: 18.0,
                                           color: Colors.white,
@@ -178,17 +178,17 @@ class _HomePageState extends State<HomePage> {
                                     items: [
                                       Center(
                                           child: Text(
-                                            '요약하는데 약 2분 정도 시간이 걸릴 수 있어요!',
+                                            'summaryGeneratingMessage'.tr(),
                                             style: TextStyle(fontSize: 16.0),
                                           )),
                                       Center(
                                           child: Text(
-                                            'DAKUA는 수업 요약에 탁월해요',
+                                            'summarization'.tr(),
                                             style: TextStyle(fontSize: 18.0),
                                           )),
                                       Center(
                                           child: Text(
-                                            '광고문의 dakua@dankook.ac.kr',
+                                            'advertisementMessage'.tr(),
                                             style: TextStyle(fontSize: 18.0),
                                           )),
                                     ],
@@ -209,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 SizedBox(height: 100.0),
                                 Text(
-                                  '녹음 파일 첨부',
+                                  'recordAttachmentTitle'.tr(),
                                   style: TextStyle(fontSize: 18.0),
                                   textAlign: TextAlign.center,
                                 ),
@@ -230,8 +230,8 @@ class _HomePageState extends State<HomePage> {
                                     child: Center(
                                       child: Text(
                                         fileAttachViewModel.filePath != null
-                                            ? '파일 선택됨: ${fileAttachViewModel.filePath}'
-                                            : '파일 첨부하기',
+                                            ? '${fileAttachViewModel.filePath}'
+                                            : 'noFileSelected'.tr(),
                                         style: TextStyle(
                                           fontSize: 18.0,
                                           color: Colors.black,
@@ -273,7 +273,7 @@ class _HomePageState extends State<HomePage> {
                                         elevation: 0,
                                       ),
                                       child: Text(
-                                        '요약 생성하기',
+                                        'generateSummaryButton'.tr(),
                                         style: TextStyle(
                                           fontSize: 18.0,
                                           color: Colors.white,

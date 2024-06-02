@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileplatform_project/dbHelper/user_dbHelper.dart';
 import 'package:mobileplatform_project/model/user.dart';
@@ -56,15 +57,15 @@ class SignUpViewModel extends ChangeNotifier {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text('축하합니다!'),
-        content: Text('회원가입이 완료되었습니다.'),
+        title: Text('signUpSuccessTitle'.tr()),
+        content: Text('signUpSuccessContent'.tr()),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.pop(context);
               _navigateToLoginPage();
             },
-            child: Text('확인'),
+            child: Text('signUpSuccessButton'.tr()),
           ),
         ],
       ),
@@ -75,12 +76,12 @@ class SignUpViewModel extends ChangeNotifier {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text('오류'),
-        content: Text('모든 필수 정보를 입력해주세요.'),
+        title: Text('signUpErrorTitle'.tr()),
+        content: Text('signUpErrorContent'.tr()),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('확인'),
+            child: Text('signUpSuccessButton'.tr()),
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../model/user.dart';
@@ -61,7 +62,7 @@ class _HistorySummaryPageState extends State<HistorySummaryPage> {
                               title: Text(
                                 widget.data['text_data'] != null
                                     ? widget.data['text_data']!
-                                    : '요약된 내용이 없습니다.',
+                                    : 'no_summary'.tr(),
                                 style: TextStyle(fontSize: 16.0),
                                 textAlign: TextAlign.center,
                               ),
@@ -72,7 +73,7 @@ class _HistorySummaryPageState extends State<HistorySummaryPage> {
                             child: Text(
                               widget.data['full_text_data'] != null
                                   ? widget.data['full_text_data']!
-                                  : '전체 내용이 없습니다.',
+                                  : 'no_full'.tr(),
                               style: TextStyle(fontSize: 16.0),
                               textAlign: TextAlign.center,
                             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:mobileplatform_project/view/widget/appBar.dart';
 import 'package:mobileplatform_project/view/front/loginPage.dart';
 
@@ -9,15 +10,22 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  String selectedLanguage = '한국어';
+  late String selectedLanguage= 'koreanLanguage'.tr();
 
-  //로그아웃
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      selectedLanguage = context.locale.languageCode;
+    });
+  }
+
+  // 로그아웃
   void logout() {
-
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (context) => LoginPage()),
-          (route) => false, // 현재 페이지 이후의 모든 페이지를 스택에서 제거
+          (route) => false,
     );
   }
 
@@ -30,7 +38,7 @@ class _SettingPageState extends State<SettingPage> {
           children: [
             SizedBox(height: 50),
             Text(
-              '시스템 언어 설정',
+              'systemLanguageSetting'.tr(),
               style: TextStyle(
                 fontSize: 20.0,
               ),
@@ -46,27 +54,29 @@ class _SettingPageState extends State<SettingPage> {
                         CupertinoActionSheetAction(
                           onPressed: () {
                             setState(() {
-                              selectedLanguage = '한국어';
+                              selectedLanguage = 'koreanLanguage'.tr();;
+                              context.setLocale(Locale('ko', 'KR'));
                             });
                             Navigator.pop(context);
                           },
-                          child: Text('한국어'),
+                          child: Text('koreanLanguage'.tr()),
                         ),
                         CupertinoActionSheetAction(
                           onPressed: () {
                             setState(() {
-                              selectedLanguage = '중국어';
+                              selectedLanguage = 'chineseLanguage'.tr();
+                              context.setLocale(Locale('zh', 'CN'));
                             });
                             Navigator.pop(context);
                           },
-                          child: Text('중국어'),
+                          child: Text('chineseLanguage'.tr()),
                         ),
                       ],
                       cancelButton: CupertinoActionSheetAction(
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text('취소'),
+                        child: Text('cancel'.tr()),
                       ),
                     );
                   },
@@ -83,7 +93,7 @@ class _SettingPageState extends State<SettingPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      selectedLanguage,
+                      selectedLanguage.tr(),
                       style: TextStyle(color: Colors.black),
                     ),
                     Icon(Icons.arrow_drop_down),
@@ -105,7 +115,7 @@ class _SettingPageState extends State<SettingPage> {
                 children: [
                   Icon(Icons.logout),
                   SizedBox(width: 10),
-                  Text('로그아웃'),
+                  Text('logout'.tr()),
                 ],
               ),
             ),

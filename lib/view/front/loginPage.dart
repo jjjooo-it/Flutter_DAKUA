@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobileplatform_project/view/front/signupPage.dart';
 import 'package:provider/provider.dart';
 import '../../viewModel/loginPage_viewModel.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -40,7 +41,7 @@ class Login extends StatelessWidget {
                   height: 50,
                 ),
                 const SizedBox(width: 10),
-                const Text(
+                Text(
                   'DAKUA',
                   style: TextStyle(
                     fontSize: 40,
@@ -62,8 +63,8 @@ class Login extends StatelessWidget {
                 children: [
                   TextField(
                     onChanged: (value) => viewModel.user.username = value,
-                    decoration: const InputDecoration(
-                      labelText: 'ID',
+                    decoration: InputDecoration(
+                      labelText: 'ID'.tr(),
                       border: InputBorder.none,
                       contentPadding:
                       EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -93,8 +94,8 @@ class Login extends StatelessWidget {
                 children: [
                   TextField(
                     onChanged: (value) => viewModel.user.password = value,
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
+                    decoration: InputDecoration(
+                      labelText: 'password'.tr(),
                       border: InputBorder.none,
                       contentPadding:
                       EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -117,7 +118,7 @@ class Login extends StatelessWidget {
               height: 60,
               width: 300,
               child: Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [Colors.greenAccent, Colors.blueGrey],
                     begin: Alignment.topLeft,
@@ -131,8 +132,8 @@ class Login extends StatelessWidget {
                     backgroundColor: Colors.transparent,
                     elevation: 0,
                   ),
-                  child: const Text(
-                    '로그인하기',
+                  child: Text(
+                    tr('login_button'),
                     style: TextStyle(
                       fontSize: 18.0,
                       color: Colors.white,
@@ -146,15 +147,15 @@ class Login extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  '아직 회원이 아니라면?',
+                Text(
+                  'not_a_member_yet'.tr(),
                   style: TextStyle(fontSize: 14.0),
                 ),
                 const SizedBox(width: 5),
                 TextButton(
                   onPressed: () => _navigateToSignUpPage(context),
-                  child: const Text(
-                    '회원가입',
+                  child: Text(
+                    'sign_up'.tr(),
                     style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.bold,
