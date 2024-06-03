@@ -8,12 +8,20 @@ import 'package:http/http.dart' as http;
 
 class AIProcessDataSource {
   final String baseUrl = "http://220.149.250.118:8000"; //실제 주소로 바꿔야함
-  Future<Map<String, dynamic>> postUserId(String userId) async {
+  Future<Map<String, dynamic>> postUserId(String userId, String currentLanguage) async {
     print("api call  $userId");
+    final uri = Uri.parse('http://220.149.250.118:8000/AI_process/');
     final response = await http.post(
-      Uri.parse('$baseUrl/AI_process?user_id=$userId'), // 쿼리 문자열 대신 URL에 직접 추가
+      uri,
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+        'user_id': userId,
+        'language': currentLanguage
+      }),
     );
-
     if (response.statusCode == 200) {
       final decodedResponse = json.decode(utf8.decode(response.bodyBytes));
       String? image = decodedResponse['image'];
