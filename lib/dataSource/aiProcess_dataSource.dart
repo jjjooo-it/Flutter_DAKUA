@@ -15,7 +15,12 @@ class AIProcessDataSource {
     );
 
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+      final decodedResponse = json.decode(utf8.decode(response.bodyBytes));
+      String? image = decodedResponse['image'];
+      String? text_data = decodedResponse['text_data'];
+      String? full_text_data = decodedResponse['full_text_data'];
+
+      return {'image': image, 'text_data': text_data, 'full_text_data':full_text_data};
     } else {
       throw Exception('Failed to fetch summary data');
     }

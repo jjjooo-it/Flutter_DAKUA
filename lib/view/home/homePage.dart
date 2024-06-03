@@ -23,7 +23,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
+  late final Map<String, String?> data;
+  bool _isExpanded = false;
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -105,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                                   width: 700,
                                   height: 350,
                                   color: Colors.grey[300],
-                                  child: aiViewModel.aiSummary?.image != null
+                                  child:  aiViewModel.aiSummary?.image!= null
                                       ? Image.memory(
                                     base64.decode(
                                         aiViewModel.aiSummary!.image!),
@@ -116,15 +117,40 @@ class _HomePageState extends State<HomePage> {
                                 SizedBox(height: 10),
                                 Container(
                                   width: double.infinity,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20.0, vertical: 10.0),
-                                  color: Colors.grey[200],
-                                  child: Text(
-                                    aiViewModel.aiSummary?.summaryText != null
-                                        ? aiViewModel.aiSummary!.summaryText!
-                                        : 'noSummaryMessage'.tr(),
-                                    style: TextStyle(fontSize: 16.0),
-                                    textAlign: TextAlign.center,
+                                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                                  child: ExpansionPanelList(
+                                    expandedHeaderPadding: EdgeInsets.zero,
+                                    expansionCallback: (int index, bool isExpanded) {
+                                      setState(() {
+                                        _isExpanded = !_isExpanded;
+                                      });
+                                    },
+                                    children: [
+                                      ExpansionPanel(
+                                        headerBuilder: (BuildContext context, bool isExpanded) {
+                                          return ListTile(
+                                            title: Text(
+                                              aiViewModel.aiSummary?.text_data != null
+                                                  ?   aiViewModel.aiSummary!.text_data!
+                                                  : 'no_summary'.tr(),
+                                              style: TextStyle(fontSize: 16.0),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          );
+                                        },
+                                        body: Container(
+                                          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                                          child: Text(
+                                            aiViewModel.aiSummary?.full_text_data!= null
+                                                ?    aiViewModel.aiSummary!.full_text_data!
+                                                : 'no_full'.tr(),
+                                            style: TextStyle(fontSize: 16.0),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                        isExpanded: _isExpanded,
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 SizedBox(height: 30),

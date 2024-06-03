@@ -6,24 +6,24 @@
 import 'dart:convert';
 
 class AISummary{
-  String? summaryText;
+  String? text_data;
+  String? full_text_data;
   String? image;
 
   AISummary({
-    required this.summaryText,
+    required this.text_data,
+    required this.full_text_data,
     required this.image,
   });
 
   factory AISummary.fromJson(Map<String, dynamic> json) {
     return AISummary(
-      summaryText: json['summarize_text'] != null ? utf8.decode(json['summarize_text'].codeUnits) : null,
+      text_data: json['text_data'] != null ? json['text_data'] : null,
+      full_text_data: json['full_text_data'] != null ? json['full_text_data'] : null,
       image: json['image'],
     );
   }
 
-  void setSummarizeText(String? value) {
-    summaryText = value;
-  }
   void setImage(String? value) {
     image = value;
   }
