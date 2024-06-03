@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   bool _isExpanded = false;
   @override
   Widget build(BuildContext context) {
+    String currentLanguage = context.locale.languageCode;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AIProcessViewModel>(
@@ -289,7 +290,7 @@ class _HomePageState extends State<HomePage> {
                                             null) {
                                           print("ai process start");
                                           aiViewModel.postUserId(
-                                              widget.user.userId!);
+                                              widget.user.userId!,currentLanguage);
                                         } else {
                                           print("No file selected.");
                                         }

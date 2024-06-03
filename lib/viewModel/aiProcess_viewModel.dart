@@ -14,14 +14,14 @@ class AIProcessViewModel extends ChangeNotifier {
   bool dataReceived = false;
   AISummary? aiSummary;
 
-  Future<void> postUserId(String userId) async {
+  Future<void> postUserId(String userId, String currentLanguage) async {
     loading = true;
     dataReceived = false;
     print("ai api call");
     notifyListeners();
 
     try {
-      final responseData = await dataSource.postUserId(userId);
+      final responseData = await dataSource.postUserId(userId,currentLanguage);
       aiSummary = AISummary.fromJson(responseData);
       dataReceived = true;
     } catch (error) {
