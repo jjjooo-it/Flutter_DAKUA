@@ -6,9 +6,10 @@ import 'package:mobileplatform_project/view/setting/settingPage.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({Key? key, required this.user}) : super(key: key);
+  const BottomNavBar({Key? key, required this.user, this.initialIndex = 1}) : super(key: key);
 
   final User user;
+  final int initialIndex;
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
@@ -28,6 +29,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       HomePage(user: _user),
       SettingPage(),
     ];
+    _index = widget.initialIndex;
   }
 
   @override

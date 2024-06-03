@@ -2,8 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mobileplatform_project/dbHelper/user_dbHelper.dart';
 import 'package:mobileplatform_project/model/user.dart';
-import 'package:mobileplatform_project/view/widget/bottomNavBar.dart';
-
+import 'package:mobileplatform_project/view/front/middlePage.dart';
 
 class LoginViewModel extends ChangeNotifier {
   late User user;
@@ -21,7 +20,7 @@ class LoginViewModel extends ChangeNotifier {
       await DBHelper.getUser(user.username, user.password);
       if (loggedInUser != null) {
         user.userId = user.username; // 만약 로그인에 성공하면 userId를 할당
-        _navigateToMainPage(context, user);
+        _navigateToMiddlePage(context, user);
       } else {
         _showErrorDialog();
       }
@@ -67,10 +66,10 @@ class LoginViewModel extends ChangeNotifier {
     );
   }
 
-  void _navigateToMainPage(BuildContext context, User user) {
+  void _navigateToMiddlePage(BuildContext context, User user) {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => BottomNavBar(user: user)),
+      MaterialPageRoute(builder: (context) => MiddlePage(user: user)),
     );
   }
 }
