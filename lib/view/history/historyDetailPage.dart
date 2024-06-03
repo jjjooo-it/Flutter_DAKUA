@@ -14,12 +14,15 @@ class HistoryDetailPage extends StatelessWidget {
   final List<String> files;
   final User user;
 
+
   const HistoryDetailPage(
       {required this.folder, required this.files, Key? key, required this.user})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    String currentLanguage = context.locale.languageCode;
+    print('current language $currentLanguage');
     return Scaffold(
       appBar: AppBarWidget(),
       body: SingleChildScrollView(
@@ -75,7 +78,7 @@ class HistoryDetailPage extends StatelessWidget {
                   ),
                   child: ElevatedButton(
                     onPressed: () async {
-                      var data = await getUserData(user.userId, folderName, creationDate, fileName);
+                      var data = await getUserData(user.userId, folderName, creationDate, fileName,currentLanguage);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -129,10 +132,11 @@ class HistoryDetailPage extends StatelessWidget {
     );
   }
 
-  Future<Map<String, String?>> getUserData(String? userId, String folderName, String date, String fileName) async {
-    print("getUserData api call ");
-    print("User ID: $userId, Folder Name: $folderName, Date: $date, File Name: $fileName");
+
+  Future<Map<String, String?>> getUserData(String? userId, String folderName, String date, String fileName, String currentLanguage) async {
+    print("User ID: $userId, Folder Name: $folderName, Date: $date, File Name: $fileName, language: $currentLanguage");
     try {
+
       final uri = Uri.parse('http://220.149.250.118:8000/Get_User_text_data/folder/');
       final response = await http.post(
         uri,
@@ -145,12 +149,12 @@ class HistoryDetailPage extends StatelessWidget {
           'folder_name': folderName,
           'date': date,
           'file_name': fileName,
+          'language': currentLanguage
         }),
       );
 
       if (response.statusCode == 200) {
         final decodedResponse = json.decode(utf8.decode(response.bodyBytes));
-        print('Success: $decodedResponse');
 
         // Assuming the response contains the image and summary text
         String? image = decodedResponse['image'];
