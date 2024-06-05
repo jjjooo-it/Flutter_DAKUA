@@ -113,9 +113,15 @@ class _SettingPageState extends State<SettingPage> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.logout),
+                  Icon(Icons.logout,
+                    color: Colors.black,
+                  ),
                   SizedBox(width: 10),
-                  Text('logout'.tr()),
+                  Text('logout'.tr(),
+                    style: TextStyle(
+                      color: Colors.black
+                    ),
+                  ),
                 ],
               ),
             ),

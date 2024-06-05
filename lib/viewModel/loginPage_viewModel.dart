@@ -65,11 +65,28 @@ class LoginViewModel extends ChangeNotifier {
       },
     );
   }
-
   void _navigateToMiddlePage(BuildContext context, User user) {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => MiddlePage(user: user)),
+      PageRouteBuilder(
+        transitionDuration: Duration(milliseconds: 1500),
+        pageBuilder: (context, animation, secondaryAnimation) => MiddlePage(user: user),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          var curve = Curves.easeInOut;
+
+          //화면 전환 애니메이션
+          var fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: animation,
+            curve: Interval(0.0, 0.5, curve: curve), // 0부터 0.5까지는 흐려짐
+          ));
+
+          return FadeTransition(
+            opacity: fadeAnimation,
+            child: child,
+          );
+        },
+      ),
     );
   }
+
 }

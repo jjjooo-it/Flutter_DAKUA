@@ -37,21 +37,23 @@ class _ResultPageState extends State<ResultDetailPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    '한줄 요약',
-                    style: TextStyle(fontSize: 20.0),
-                    textAlign: TextAlign.left,
-                  ),
-                  SizedBox(height: 10.0),
-                  Container(
-                    height: 100,
-                    padding: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(10.0),
+                  if (!isExpanded) ...[
+                    Text(
+                      '한줄 요약',
+                      style: TextStyle(fontSize: 20.0),
+                      textAlign: TextAlign.left,
                     ),
-                  ),
-                  SizedBox(height: 50.0),
+                    SizedBox(height: 10.0),
+                    Container(
+                      height: 100,
+                      padding: EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    SizedBox(height: 50.0),
+                  ],
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -80,7 +82,7 @@ class _ResultPageState extends State<ResultDetailPage> {
                                 });
                               },
                               icon: Icon(
-                                isExpanded ? Icons.expand_more : Icons.expand_less, // 아이콘 변경
+                                isExpanded ? Icons.expand_less : Icons.expand_more, // 아이콘 변경
                               ),
                             ),
                           ),

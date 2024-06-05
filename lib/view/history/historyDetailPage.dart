@@ -37,14 +37,18 @@ class HistoryDetailPage extends StatelessWidget {
                     Navigator.pop(context);
                   },
                 ),
-                SizedBox(width: 100),
-                Text(
-                  'pageTitle'.tr(),
-                  style: TextStyle(
-                    fontSize: 25.0,
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      'pageTitle'.tr(),
+                      style: TextStyle(
+                        fontSize: 25.0,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                  textAlign: TextAlign.center,
                 ),
+                SizedBox(width: 48),
               ],
             ),
             SizedBox(height: 25.0),
@@ -82,7 +86,7 @@ class HistoryDetailPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => HistorySummaryPage(user: user, data: data),
+                          builder: (context) => HistorySummaryPage(folder: folder, files: files, user: user, data: data),
                         ),
                       );
                     },

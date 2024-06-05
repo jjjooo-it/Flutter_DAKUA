@@ -64,7 +64,7 @@ class Login extends StatelessWidget {
                   TextField(
                     onChanged: (value) => viewModel.user.username = value,
                     decoration: InputDecoration(
-                      labelText: 'ID'.tr(),
+                      labelText: 'id'.tr(),
                       border: InputBorder.none,
                       contentPadding:
                       EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -155,7 +155,7 @@ class Login extends StatelessWidget {
                 TextButton(
                   onPressed: () => _navigateToSignUpPage(context),
                   child: Text(
-                    'sign_up'.tr(),
+                    'signup'.tr(),
                     style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.bold,

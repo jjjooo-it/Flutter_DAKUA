@@ -119,13 +119,13 @@ class _HistoryPageState extends State<HistoryPage> {
               ),
               SizedBox(height: 10.0),
               Divider(
-                thickness: 2.0,
+                thickness: 1.0,
                 indent: 40.0,
                 endIndent: 40.0,
               ),
               SizedBox(height: 20.0),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                padding: const EdgeInsets.only(right: 100),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -133,9 +133,26 @@ class _HistoryPageState extends State<HistoryPage> {
                       onPressed: () {
                         _addFolder(context);
                       },
-                      icon: Icon(Icons.create_new_folder),
-                      label: Text('new_folder'.tr()),
+                      icon: Icon(
+                        Icons.create_new_folder,
+                        color: Colors.grey
+                      ),
+                      label: Text(
+                        'new_folder'.tr(),
+                        style: TextStyle(
+                          color: Colors.black
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          side: BorderSide(color: Colors.grey,
+                        ),
+                      ),
                     ),
+                    )
                   ],
                 ),
               ),
