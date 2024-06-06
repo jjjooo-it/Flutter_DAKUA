@@ -31,37 +31,127 @@ static Future<void> _initDatabaseFactory() async {
 </code></pre>
 
 <br/><br/>
+## 화면 전환 애니메이션
+* PageRouteBuilder를 이용 [공식문서 참고](https://docs.flutter.dev/cookbook/animation/page-route-animation)
+* 서서히 나타나도록 
+<pre><code>
+  Navigator.pushReplacement(
+    context,
+    PageRouteBuilder(
+      transitionDuration: Duration(milliseconds: 1500),
+      pageBuilder: (context, animation, secondaryAnimation) => MiddlePage(user: user),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var curve = Curves.easeInOut;
+
+        //화면 전환 애니메이션
+        var fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+          parent: animation,
+          curve: Interval(0.0, 0.5, curve: curve), // 0부터 0.5까지는 흐려짐
+        ));
+
+        return FadeTransition(
+          opacity: fadeAnimation,
+          child: child,
+        );
+      },
+    ),
+  );
+}
+</code></pre>
+
+
+<br/><br/>
 ## 10초마다 넘겨지는 광고바
 * carousel_slider 패키지 이용 [carousel_slider](https://pub.dev/packages/carousel_slider)
 * 여러 옵션을 지정할 수 있음
 <pre><code>
 options: CarouselOptions(
-        height: 400.0, // 슬라이더의 높이를 지정
-        aspectRatio: 16 / 9, // 슬라이더의 종횡비를 지정
-        initialPage: 0, // 처음에 표시될 슬라이드의 인덱스
-        enableInfiniteScroll: true, // 무한 스크롤 활성화
-        reverse: false, // 슬라이드 넘기는 방향 반전
-        autoPlay: true, // 자동 재생 활성화
-        autoPlayInterval: Duration(seconds: 3), // 자동 재생 간격
-        autoPlayAnimationDuration: Duration(milliseconds: 800), // 자동 재생 애니메이션 시간
-        autoPlayCurve: Curves.fastOutSlowIn, // 자동 재생 애니메이션 커브
-        pauseAutoPlayOnTouch: true, // 사용자가 터치하면 자동 재생 일시 중지
-        enlargeCenterPage: true, // 중앙 페이지를 크게 표시
-        onPageChanged: (index, reason) { // 페이지가 변경될 때 실행할 함수
-          print('Page changed: $index, Reason: $reason');
-        },
-        scrollDirection: Axis.horizontal, // 스크롤 방향을 가로로 설정
-      ),
+  height: 100, 
+  viewportFraction: 1, 
+  initialPage: 0,
+  enableInfiniteScroll: true, //무한 스크롤 활성화
+  autoPlay: true, //자동 재생 활성화
+  autoPlayInterval:
+  Duration(seconds: 10), //자동 재생 간격
+  autoPlayAnimationDuration:
+  Duration(milliseconds: 8000), //자동 재생 애니메이션 시간
+  autoPlayCurve: Curves.fastOutSlowIn,
+  scrollDirection: Axis.horizontal,
+),
 </code></pre>
 
 <br/><br/>
 ## 아코디언 형식으로 요약 내용 보기
-* isExpand 변수를 이용하여 버튼 클릭시 내용을 대치
+* isExpand 변수와 ExpansionPanel을 이용 [공식문서 참고](https://api.flutter.dev/flutter/material/ExpansionPanel-class.html)
+<pre><code>
+Container(
+  width: double.infinity,
+  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+  child: ExpansionPanelList(
+    expandedHeaderPadding: EdgeInsets.zero,
+    expansionCallback: (int index, bool isExpanded) {
+      setState(() {
+        _isExpanded = !_isExpanded;
+      });
+    },
+    children: [
+      ExpansionPanel(
+        headerBuilder: (BuildContext context, bool isExpanded) {
+          return ListTile(
+            title: Text(
+             _isExpanded? aiViewModel.aiSummary?.full_text_data ?? 'no_full'.tr()
+                  :   aiViewModel.aiSummary!.text_data ?? 'no_summary'.tr(),
+              style: TextStyle(fontSize: 16.0),
+              textAlign: TextAlign.center,
+            ),
+          );
+        },
+        body: _isExpanded?
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          child: Text(
+            "",
+            style: TextStyle(fontSize: 0.0),
+            textAlign: TextAlign.center,
+          ),
+        )
+        : Container(),
+        isExpanded: _isExpanded,
+      ),
+    ],
+  ),
+),
+
+</code></pre>
 
 <br/><br/>
 ## 언어 설정(한국어/중국어)
 * easy_localization 패키지 이용 [easy_localization](https://pub.dev/packages/easy_localization)
+<pre><code>
+CupertinoActionSheetAction(
+  onPressed: () {
+    setState(() {
+      selectedLanguage = 'koreanLanguage'.tr();;
+      context.setLocale(Locale('ko', 'KR'));
+    });
+    Navigator.pop(context);
+  },
+  child: Text('koreanLanguage'.tr()),
+),
+</code></pre>
 
 <br/><br/>
 ## 로딩 바 
 * flutter_spinkit 패키지 이용 [flutter_spinkit](https://pub.dev/packages/flutter_spinkit)
+<pre><code>
+SpinKitWave(
+  itemBuilder: (context, index) {
+    return const DecoratedBox(
+      decoration: BoxDecoration(color: Colors.green),
+    );
+  },
+),
+</code></pre>
+
+
+
