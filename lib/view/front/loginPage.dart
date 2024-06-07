@@ -58,27 +58,14 @@ class Login extends StatelessWidget {
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextField(
-                    onChanged: (value) => viewModel.user.username = value,
-                    decoration: InputDecoration(
-                      labelText: 'id'.tr(),
-                      border: InputBorder.none,
-                      contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    ),
-                  ),
-                  if (viewModel.usernameError.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        viewModel.usernameError,
-                        style: TextStyle(color: Colors.red, fontSize: 12),
-                      ),
-                    ),
-                ],
+              child: TextField(
+                onChanged: (value) => viewModel.user.id = value,
+                decoration: InputDecoration(
+                  labelText: 'id'.tr(),
+                  errorText: viewModel.idError.isNotEmpty ? viewModel.idError : null,
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                ),
               ),
             ),
             const SizedBox(height: 10),
@@ -89,28 +76,15 @@ class Login extends StatelessWidget {
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextField(
-                    onChanged: (value) => viewModel.user.password = value,
-                    decoration: InputDecoration(
-                      labelText: 'password'.tr(),
-                      border: InputBorder.none,
-                      contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    ),
-                    obscureText: true,
-                  ),
-                  if (viewModel.passwordError.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        viewModel.passwordError,
-                        style: TextStyle(color: Colors.red, fontSize: 12),
-                      ),
-                    ),
-                ],
+              child: TextField(
+                onChanged: (value) => viewModel.user.password = value,
+                decoration: InputDecoration(
+                  labelText: 'password'.tr(),
+                  errorText: viewModel.passwordError.isNotEmpty ? viewModel.passwordError : null,
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                ),
+                obscureText: true,
               ),
             ),
             const SizedBox(height: 20),

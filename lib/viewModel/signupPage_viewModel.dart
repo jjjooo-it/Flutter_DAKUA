@@ -11,7 +11,7 @@ class SignUpViewModel extends ChangeNotifier {
   late BuildContext context;
 
   SignUpViewModel(this.context) {
-    user = User(id: '', username: '', password: '', country: '',userId: '');
+    user = User(username: '', id: '', password: '', country: '',userId: '');
   }
 
 

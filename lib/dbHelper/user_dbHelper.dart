@@ -25,10 +25,9 @@ class DBHelper {
           CREATE TABLE users(
             id TEXT PRIMARY KEY, 
             username TEXT, 
-            password TEXT, 
-            name TEXT, 
+            password TEXT,  
             country TEXT, 
-            userID TEXT
+            userID Text
           )
           ''',
         );
@@ -55,8 +54,8 @@ class DBHelper {
     );
     if (maps.isNotEmpty) {
       return User(
-        id: maps[0]['id'],
         username: maps[0]['username'],
+        id: maps[0]['id'],
         password: maps[0]['password'],
         country: maps[0]['country'],
         userId: maps[0]['userId'],

@@ -258,9 +258,9 @@ class _HomePageState extends State<HomePage> {
                                       enableInfiniteScroll: true, //무한 스크롤 활성화
                                       autoPlay: true, //자동 재생 활성화
                                       autoPlayInterval:
-                                      Duration(seconds: 1), //자동 재생 간격
+                                      Duration(seconds: 2), //자동 재생 간격
                                       autoPlayAnimationDuration:
-                                      Duration(milliseconds: 800), //자동 재생 애니메이션 시간
+                                      Duration(milliseconds: 2000), //자동 재생 애니메이션 시간
                                       autoPlayCurve: Curves.fastOutSlowIn,
                                       scrollDirection: Axis.horizontal,
                                     ),

@@ -1,30 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:mobileplatform_project/viewModel/loginPage_viewModel.dart';
 import '../../model/user.dart';
 import '../widget/bottomNavBar.dart';
-import '../home/homePage.dart'; // HomePage import 추가
-import '../history/historyPage.dart'; // HistoryPage import 추가
+
 
 class MiddlePage extends StatelessWidget {
   final User user;
-
   MiddlePage({required this.user});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Middle(user: user),
-    );
-  }
-}
 
-class Middle extends StatelessWidget {
-  final User user;
-
-  Middle({required this.user});
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(

@@ -36,38 +36,46 @@ class SignUpForm extends StatefulWidget {
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   String selectedCountry = 'choose'.tr();
-
-  void _showSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: Duration(seconds: 2),
-      ),
-    );
-  }
+  String nameError = '';
+  String idError = '';
+  String passwordError = '';
 
   void _handleInputChange(BuildContext context, String value, String field) {
     final viewModel = Provider.of<SignUpViewModel>(context, listen: false);
     bool isAllowed = RegExp(r'^[a-zA-Z]+$').hasMatch(value);
 
     if (!isAllowed) {
-      _showSnackBar(context, '올바른 입력값을 넣어주세요.');
+      setState(() {
+        switch (field) {
+          case 'username':
+            nameError = '올바른 입력값을 넣어주세요.';
+            break;
+          case 'id':
+            idError = '올바른 입력값을 넣어주세요.';
+            break;
+          case 'password':
+            passwordError = '올바른 입력값을 넣어주세요.';
+            break;
+        }
+      });
       return;
     }
-
 
     setState(() {
       value = value.replaceAll(' ', '');
       switch (field) {
         case 'username':
           viewModel.user.username = value;
+          nameError = '';
           break;
         case 'id':
           viewModel.user.id = value;
           viewModel.user.userId = value;
+          idError = '';
           break;
         case 'password':
           viewModel.user.password = value;
+          passwordError = '';
           break;
       }
     });
@@ -102,6 +110,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
               ],
             ),
+            CustomErrorDisplay(errorMessage: nameError),
             Container(
               height: 60,
               width: 300,
@@ -144,6 +153,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
               ],
             ),
+            CustomErrorDisplay(errorMessage: idError),
             Container(
               height: 60,
               width: 300,
@@ -186,6 +196,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
               ],
             ),
+            CustomErrorDisplay(errorMessage: passwordError),
             Container(
               height: 60,
               width: 300,
@@ -323,5 +334,30 @@ class _SignUpFormState extends State<SignUpForm> {
         ),
       ),
     );
+  }
+}
+
+class CustomErrorDisplay extends StatelessWidget {
+  final String errorMessage;
+
+  CustomErrorDisplay({required this.errorMessage});
+
+  @override
+  Widget build(BuildContext context) {
+    return errorMessage.isNotEmpty
+        ? Container(
+      padding: EdgeInsets.symmetric(horizontal: 50.0),
+      child: Row(
+        children: [
+          Icon(Icons.error, color: Colors.red),
+          SizedBox(width: 10),
+          Text(
+            errorMessage,
+            style: TextStyle(color: Colors.red, fontSize: 12),
+          ),
+        ],
+      ),
+    )
+        : Container();
   }
 }
