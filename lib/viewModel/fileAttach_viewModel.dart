@@ -13,20 +13,24 @@ class FileAttachViewModel extends ChangeNotifier {
 
   String? filePath = null; // 초기값을 null로 설정
   bool loading = false;
+  String? fileName = null;
 
   FileAttachViewModel(this.dataSource, this.user);
 
   Future<void> selectFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      withData: true,
+    );
 
     if (result != null && result.files.isNotEmpty) {
       filePath = result.files.single.name;
 
+
       if (filePath != null) {
         print(filePath);
         Uint8List fileBytes = result.files.single.bytes!;
-        String fileName = result.files.single.name;
-        dataSource.uploadFile(user, fileBytes, fileName);
+        fileName = result.files.single.name;
+        dataSource.uploadFile(user, fileBytes, fileName!);
 
         notifyListeners(); // 상태 변경을 알림
       } else {

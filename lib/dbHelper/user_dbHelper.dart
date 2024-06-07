@@ -3,8 +3,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:mobileplatform_project/model/user.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 class DBHelper {
   static Database? _db;
@@ -13,23 +11,26 @@ class DBHelper {
     if (_db != null) {
       return _db!;
     }
-    await _initDatabaseFactory();
     _db = await initDB();
     return _db!;
   }
 
-  static Future<void> _initDatabaseFactory() async {
-    sqfliteFfiInit();
-    databaseFactory = databaseFactoryFfiWeb;
-  }
-
   static initDB() async {
-    String path = await getDatabasesPath();
+    String path = join(await getDatabasesPath(), 'my_database.db');
     return openDatabase(
-      join(path, 'my_database.db'),
+      path,
       onCreate: (db, version) {
         return db.execute(
-          "CREATE TABLE users(id TEXT PRIMARY KEY, username TEXT, password TEXT, name TEXT, country TEXT, userID TEXT)",
+          '''
+          CREATE TABLE users(
+            id TEXT PRIMARY KEY, 
+            username TEXT, 
+            password TEXT, 
+            name TEXT, 
+            country TEXT, 
+            userID TEXT
+          )
+          ''',
         );
       },
       version: 1,

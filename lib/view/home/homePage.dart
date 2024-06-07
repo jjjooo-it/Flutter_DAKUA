@@ -255,12 +255,12 @@ class _HomePageState extends State<HomePage> {
                                       height: 100,
                                       viewportFraction: 1,
                                       initialPage: 0,
-                                      enableInfiniteScroll: true,
-                                      autoPlay: true,
+                                      enableInfiniteScroll: true, //무한 스크롤 활성화
+                                      autoPlay: true, //자동 재생 활성화
                                       autoPlayInterval:
-                                      Duration(seconds: 10),
+                                      Duration(seconds: 1), //자동 재생 간격
                                       autoPlayAnimationDuration:
-                                      Duration(milliseconds: 8000),
+                                      Duration(milliseconds: 800), //자동 재생 애니메이션 시간
                                       autoPlayCurve: Curves.fastOutSlowIn,
                                       scrollDirection: Axis.horizontal,
                                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:mobileplatform_project/viewModel/signupPage_viewModel.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -33,206 +34,294 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
+  final _formKey = GlobalKey<FormState>();
   String selectedCountry = 'choose'.tr();
+
+  void _showSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
+
+  void _handleInputChange(BuildContext context, String value, String field) {
+    final viewModel = Provider.of<SignUpViewModel>(context, listen: false);
+    bool isAllowed = RegExp(r'^[a-zA-Z]+$').hasMatch(value);
+
+    if (!isAllowed) {
+      _showSnackBar(context, '올바른 입력값을 넣어주세요.');
+      return;
+    }
+
+
+    setState(() {
+      value = value.replaceAll(' ', '');
+      switch (field) {
+        case 'username':
+          viewModel.user.username = value;
+          break;
+        case 'id':
+          viewModel.user.id = value;
+          viewModel.user.userId = value;
+          break;
+        case 'password':
+          viewModel.user.password = value;
+          break;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<SignUpViewModel>(context);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          'Sign Up',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(height: 50.0),
-        Row(
-          children: [
-            SizedBox(width: 60),
+    return Form(
+      key: _formKey,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
             Text(
-              'NAME',
+              'Sign Up',
+              textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 20.0,
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ],
-        ),
-        Container(
-          height: 60,
-          width: 300,
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: TextField(
-            onChanged: (value) => viewModel.user.username = value.toString(),
-            decoration: InputDecoration(
-              labelText: 'name'.tr(),
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            ),
-          ),
-        ),
-        SizedBox(height: 20.0),
-        Row(
-          children: [
-            SizedBox(width: 60),
-            Text(
-              'ID',
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
-            ),
-          ],
-        ),
-        Container(
-          height: 60,
-          width: 300,
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: TextField(
-            onChanged: (value) {
-              viewModel.user.id = value.toString();
-              viewModel.user.userId = value.toString();
-            },
-            decoration: InputDecoration(
-              labelText: 'id'.tr(),
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            ),
-          ),
-        ),
-        SizedBox(height: 20.0),
-        Row(
-          children: [
-            SizedBox(width: 60),
-            Text(
-              'PASSWORD',
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
-            ),
-          ],
-        ),
-        Container(
-          height: 60,
-          width: 300,
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: TextField(
-            onChanged: (value) => viewModel.user.password = value.toString(),
-            decoration: InputDecoration(
-              labelText: 'password'.tr(),
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            ),
-          ),
-        ),
-        SizedBox(height: 20.0),
-        Row(
-          children: [
-            SizedBox(width: 60),
-            Text(
-              'COUNTRY',
-              style: TextStyle(
-                fontSize: 20.0,
-              ),
-            ),
-          ],
-        ),
-        GestureDetector(
-          onTap: () {
-            showCupertinoModalPopup(
-              context: context,
-              builder: (BuildContext context) {
-                return CupertinoActionSheet(
-                  actions: [
-                    CupertinoActionSheetAction(
-                      onPressed: () {
-                        setState(() {
-                          selectedCountry = 'korea'.tr();
-                          viewModel.user.country = selectedCountry;
-                        });
-                        Navigator.pop(context);
-                      },
-                      child: Text('korea'.tr()),
-                    ),
-                    CupertinoActionSheetAction(
-                      onPressed: () {
-                        setState(() {
-                          selectedCountry = 'china'.tr();
-                          viewModel.user.country = selectedCountry;
-                        });
-                        Navigator.pop(context);
-                      },
-                      child: Text('china'.tr()),
-                    ),
-                  ],
-                  cancelButton: CupertinoActionSheetAction(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text('cancel'.tr()),
-                  ),
-                );
-              },
-            );
-          },
-          child: Container(
-            width: 300,
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            SizedBox(height: 50.0),
+            Row(
               children: [
+                SizedBox(width: 60),
                 Text(
-                  selectedCountry,
-                  style: TextStyle(color: Colors.black),
+                  'NAME',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
                 ),
-                Icon(Icons.arrow_drop_down),
               ],
             ),
-          ),
-        ),
-        SizedBox(height: 50.0),
-        SizedBox(
-          height: 60,
-          width: 300,
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.greenAccent, Colors.blueGrey],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+            Container(
+              height: 60,
+              width: 300,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(20.0),
               ),
-              borderRadius: BorderRadius.circular(40.0),
+              child: TextFormField(
+                onChanged: (value) {
+                  _handleInputChange(context, value, 'username');
+                },
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z]+$')),
+                ],
+                decoration: InputDecoration(
+                  labelText: 'name'.tr(),
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Name is required';
+                  }
+                  if (value.contains(' ')) {
+                    return '공백을 포함할 수 없습니다.';
+                  }
+                  return null;
+                },
+              ),
             ),
-            child: ElevatedButton(
-              onPressed: () => viewModel.signUp(),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.transparent,
-                elevation: 0,
+            SizedBox(height: 20.0),
+            Row(
+              children: [
+                SizedBox(width: 60),
+                Text(
+                  'ID',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              height: 60,
+              width: 300,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(20.0),
               ),
-              child: Text(
-                'sign_up_button'.tr(),
-                style: TextStyle(fontSize: 18.0, color: Colors.white, fontWeight: FontWeight.bold,),
+              child: TextFormField(
+                onChanged: (value) {
+                  _handleInputChange(context, value, 'id');
+                },
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z]+$')),
+                ],
+                decoration: InputDecoration(
+                  labelText: 'id'.tr(),
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'ID is required';
+                  }
+                  if (value.contains(' ')) {
+                    return '공백을 포함할 수 없습니다.';
+                  }
+                  return null;
+                },
               ),
             ),
-          ),
+            SizedBox(height: 20.0),
+            Row(
+              children: [
+                SizedBox(width: 60),
+                Text(
+                  'PASSWORD',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              height: 60,
+              width: 300,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: TextFormField(
+                onChanged: (value) {
+                  _handleInputChange(context, value, 'password');
+                },
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z]+$')),
+                ],
+                decoration: InputDecoration(
+                  labelText: 'password'.tr(),
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Password is required';
+                  }
+                  if (value.contains(' ')) {
+                    return '공백을 포함할 수 없습니다.';
+                  }
+                  return null;
+                },
+              ),
+            ),
+            SizedBox(height: 20.0),
+            Row(
+              children: [
+                SizedBox(width: 60),
+                Text(
+                  'COUNTRY',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+              ],
+            ),
+            GestureDetector(
+              onTap: () {
+                showCupertinoModalPopup(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CupertinoActionSheet(
+                      actions: [
+                        CupertinoActionSheetAction(
+                          onPressed: () {
+                            setState(() {
+                              selectedCountry = 'korea'.tr();
+                              viewModel.user.country = selectedCountry;
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: Text('korea'.tr()),
+                        ),
+                        CupertinoActionSheetAction(
+                          onPressed: () {
+                            setState(() {
+                              selectedCountry = 'china'.tr();
+                              viewModel.user.country = selectedCountry;
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: Text('china'.tr()),
+                        ),
+                      ],
+                      cancelButton: CupertinoActionSheetAction(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('cancel'.tr()),
+                      ),
+                    );
+                  },
+                );
+              },
+              child: Container(
+                width: 300,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      selectedCountry,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    Icon(Icons.arrow_drop_down),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 50.0),
+            SizedBox(
+              height: 60,
+              width: 300,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.greenAccent, Colors.blueGrey],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(40.0),
+                ),
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      viewModel.signUp();
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                  ),
+                  child: Text(
+                    'sign_up_button'.tr(),
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
-

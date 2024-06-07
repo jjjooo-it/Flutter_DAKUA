@@ -125,7 +125,7 @@ class _HistoryPageState extends State<HistoryPage> {
               ),
               SizedBox(height: 20.0),
               Padding(
-                padding: const EdgeInsets.only(right: 100),
+                padding: const EdgeInsets.only(right: 40),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -144,7 +144,7 @@ class _HistoryPageState extends State<HistoryPage> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                        padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
                         backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
