@@ -33,7 +33,7 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-  String selectedCountry = 'korea'.tr();
+  String selectedCountry = 'choose'.tr();
 
   @override
   Widget build(BuildContext context) {
