@@ -31,6 +31,22 @@ static Future<void> _initDatabaseFactory() async {
 </code></pre>
 
 <br/><br/>
+## input 값 예외처리
+* FilteringTextInputFormatter를 이용 [공식문서 참고](https://api.flutter.dev/flutter/services/FilteringTextInputFormatter-class.html)
+<pre><code>
+inputFormatters: [
+  FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z]+$')),
+],
+ ...
+bool isAllowed = RegExp(r'^[a-zA-Z]+$').hasMatch(value);
+
+if (!isAllowed) {
+  _showSnackBar(context, '올바른 입력값을 넣어주세요.');
+  return;
+}
+</code></pre>
+
+<br/><br/>
 ## 화면 전환 애니메이션
 * PageRouteBuilder를 이용 [공식문서 참고](https://docs.flutter.dev/cookbook/animation/page-route-animation)
 * 서서히 나타나도록 
@@ -128,16 +144,14 @@ Container(
 ## 언어 설정(한국어/중국어)
 * easy_localization 패키지 이용 [easy_localization](https://pub.dev/packages/easy_localization)
 <pre><code>
-CupertinoActionSheetAction(
-  onPressed: () {
-    setState(() {
-      selectedLanguage = 'koreanLanguage'.tr();;
-      context.setLocale(Locale('ko', 'KR'));
-    });
-    Navigator.pop(context);
-  },
-  child: Text('koreanLanguage'.tr()),
-),
+runApp(
+  EasyLocalization(
+    supportedLocales: [Locale('ko', 'KR'), Locale('zh', 'CN')],
+    path: 'assets/translations',
+    fallbackLocale: Locale('ko', 'KR'), // 기본 언어
+    child: const MyApp(),
+  ),
+);
 </code></pre>
 
 <br/><br/>
