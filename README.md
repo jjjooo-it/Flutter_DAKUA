@@ -1,5 +1,7 @@
 # 🌐 Front with FLUTTER
 
+## 실행영상
+<img src= "![GIFMaker_me](https://github.com/DK-Mobile-Platform/Front/assets/94334477/a7e51789-47e4-40ff-80bb-39c973590b1d)">
 
 ## MVVM 구조로 코드를 작성
 * dataSource : 데이터를 가져오는 영역
@@ -37,12 +39,25 @@ static Future<void> _initDatabaseFactory() async {
 inputFormatters: [
   FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z]+$')),
 ],
+  
  ...
+  
 bool isAllowed = RegExp(r'^[a-zA-Z]+$').hasMatch(value);
 
 if (!isAllowed) {
-  _showSnackBar(context, '올바른 입력값을 넣어주세요.');
-  return;
+    setState(() {
+      switch (field) {
+        case 'username':
+          nameError = '올바른 입력값을 넣어주세요.';
+          break;
+        case 'id':
+          idError = '올바른 입력값을 넣어주세요.';
+          break;
+        case 'password':
+          passwordError = '올바른 입력값을 넣어주세요.';
+          break;
+      }
+    });
 }
 </code></pre>
 
